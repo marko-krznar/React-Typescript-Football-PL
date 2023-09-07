@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
-import viteLogo from '../public/vite.svg';
+// eslint-disable-next-line import/no-unresolved
+import viteLogo from '/vite.svg';
 import './App.css';
 
 function App() {
@@ -18,7 +20,7 @@ function App() {
 			</div>
 			<h1>Vite + React</h1>
 			<div className="card">
-				<button onClick={() => setCount((countPrev) => countPrev + 1)}>
+				<button onClick={() => setCount((prevCount) => prevCount + 1)}>
 					count is {count}
 				</button>
 				<p>

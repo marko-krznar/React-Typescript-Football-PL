@@ -42,7 +42,7 @@
 		"linebreak-style": "off",
 		// Configure prettier
 		"prettier/prettier": [
-			"warn",
+			"error",
 			{
 				"printWidth": 80,
 				"endOfLine": "lf",
@@ -51,11 +51,6 @@
 				"indentStyle": "tab",
 				"useTabs": true,
 				"trailingComma": "es5"
-			},
-			{
-				"fileInfoOptions": {
-					"withNodeModules": true
-				}
 			}
 		],
 		// Disallow the `any` type.
