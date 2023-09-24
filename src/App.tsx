@@ -1,38 +1,22 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from './assets/vite.svg';
 import './scss/style.scss';
 
 function App() {
-	const [count, setCount] = useState(0);
-
 	return (
-		<>
-			<div className="test">
-				<a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-					<img src={viteLogo} className="logo" alt="Vite logo" />
-				</a>
-				<a href="https://react.dev" target="_blank" rel="noreferrer">
-					<img
-						src={reactLogo}
-						className="logo react"
-						alt="React logo"
-					/>
-				</a>
-			</div>
-			<h1>Vite + React</h1>
-			<div className="card">
-				<button onClick={() => setCount((prevCount) => prevCount + 1)}>
-					count is {count}
-				</button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
+		<div>
+			<h1 className="heading">Premier League Results</h1>
+			<p className="text">
+				Welcome to the Premier League Results app, meticulously crafted
+				to enhance your knowledge and understanding of one of the most
+				prestigious football leagues in the world. Designed with a focus
+				on expanding your horizons, this app offers a wealth of
+				information, from match outcomes and insightful player analyses
+				to captivating historical data. Embrace the opportunity to delve
+				deeper into the intricacies of the Premier League, empowering
+				yourself with a comprehensive understanding of the game and its
+				captivating evolution. Get ready to embark on a journey of
+				knowledge and discovery with our immersive app experience.
 			</p>
-		</>
+		</div>
 	);
 }
 
