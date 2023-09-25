@@ -1,7 +1,8 @@
 h1.heading {
     color: $headline-color;
+    margin-top: 0;
 }
 
-p.text {
+.text, th, td {
     color: $text-colors;
 }

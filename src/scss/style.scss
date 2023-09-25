@@ -1,3 +1,49 @@
 @import "./theme";
 @import "./general";
 @import "./text";
+
+@import "./components/table";
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.content {
+    background: $light-background;
+    border-radius: 1rem;
+    padding: 4rem;
+    max-width: 54%;
+}
+
+.result-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: $light-background;
+    border-radius: 1rem;
+    padding: 4rem;
+    flex-grow: 1;
+    justify-content: center;
+
+    .team {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .result {
+        font-size: 2rem;
+        display: flex;
+        gap: 1rem;
+    }
+}
+
+.container-block {
+    background: $light-background;
+    border-radius: 1rem;
+    padding: 4rem;
+}
