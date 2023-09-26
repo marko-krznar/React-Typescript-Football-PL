@@ -4,7 +4,7 @@ import placeholder from './assets/placeholder.svg';
 function App() {
 	return (
 		<div className="container">
-			<div className="content">
+			<div className="content-block content-block-intro">
 				<h1 className="heading">Premier League Results</h1>
 				<p className="text">
 					Welcome to the Premier League Results app, meticulously
@@ -22,7 +22,7 @@ function App() {
 					discovery with our immersive app experience.
 				</p>
 			</div>
-			<div className="result-container">
+			<div className="content-block content-block-result">
 				<div className="team">
 					<img src={placeholder} alt="placeholder" />
 					<span className="text">Arsenal</span>
@@ -37,7 +37,7 @@ function App() {
 					<span className="text">Someone</span>
 				</div>
 			</div>
-			<div className="container-block">
+			<div className="content-block">
 				<table>
 					<tr>
 						<th>Position</th>

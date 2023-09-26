@@ -11,22 +11,22 @@
     padding: 2rem;
 }
 
-.content {
+.content-block {
     background: $light-background;
     border-radius: 1rem;
     padding: 4rem;
+}
+
+.content-block-intro {
     max-width: 54%;
 }
 
-.result-container {
+.content-block-result {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: $light-background;
-    border-radius: 1rem;
-    padding: 4rem;
     flex-grow: 1;
-    justify-content: center;
+    justify-content: space-between;
 
     .team {
         display: flex;
@@ -40,10 +40,4 @@
         display: flex;
         gap: 1rem;
     }
-}
-
-.container-block {
-    background: $light-background;
-    border-radius: 1rem;
-    padding: 4rem;
 }
