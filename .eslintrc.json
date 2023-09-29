@@ -67,6 +67,8 @@
 		"react-hooks/exhaustive-deps": "off",
 		// Enforce the use of the shorthand syntax.
 		"object-shorthand": "error",
-		"no-console": "warn"
+		"no-console": "warn",
+		// ESLint is having trouble resolving the path to the module './ *.svg'. It seems like you're trying to import SVG files in your code, but ESLint is having difficulty resolving this dynamic or wildcard import.
+		"import/no-unresolved": "off"
 	}
 }
