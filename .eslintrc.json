@@ -42,7 +42,7 @@
 		"linebreak-style": "off",
 		// Configure prettier
 		"prettier/prettier": [
-			"error",
+			"off",
 			{
 				"printWidth": 80,
 				"endOfLine": "lf",

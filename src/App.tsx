@@ -4,6 +4,7 @@ import placeholder from './assets/placeholder.svg';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import axios from 'axios';
+import StandingsTable from './components/StandingsTable';
 
 function App() {
 	const [data, setData] = useState<any>(null);
@@ -62,27 +63,7 @@ function App() {
 				</div>
 			</div>
 			<div className="content-block">
-				<table>
-					<tbody>
-						<tr>
-							<th>Position</th>
-							<th>Name</th>
-							<th>Points</th>
-						</tr>
-						{data &&
-							data?.response[0].league.standings[0].map(
-								(team: any) => {
-									return (
-										<tr key={team.team.id}>
-											<td>{team.rank}</td>
-											<td>{team.team.name}</td>
-											<td>{team.points}</td>
-										</tr>
-									);
-								}
-							)}
-					</tbody>
-				</table>
+				{data && <StandingsTable data={data?.response[0].league.standings[0]} />}
 			</div>
 		</div>
 	);
