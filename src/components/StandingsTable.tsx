@@ -5,7 +5,7 @@ export interface TeamProp {
 		id?: string;
 		name?: string;
 	};
-	home?: {
+	all?: {
 		played?: number;
 	};
 }
@@ -22,19 +22,19 @@ function StandingsTable(standings: StandingsProp) {
 			<tbody>
 				<tr>
 					<th>Position</th>
+					<th>Name</th>
 					<th>Games Played</th>
 					<th>Points</th>
-					<th>Name</th>
 				</tr>
 				{data &&
 					data.map((teamItem: TeamProp) => {
-						const { rank, team, points, home } = teamItem;
+						const { rank, team, points, all } = teamItem;
 
 						return (
 							<tr key={team?.id}>
 								<td>{rank}</td>
 								<td>{team?.name}</td>
-								<td>{home?.played}</td>
+								<td>{all?.played}</td>
 								<td>{points}</td>
 							</tr>
 						);
