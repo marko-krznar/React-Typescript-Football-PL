@@ -23,7 +23,7 @@ function StandingsTable(standings: StandingsProp) {
 				<tr>
 					<th>Position</th>
 					<th>Name</th>
-					<th>Games Played</th>
+					<th>GP</th>
 					<th>Points</th>
 				</tr>
 				{data &&

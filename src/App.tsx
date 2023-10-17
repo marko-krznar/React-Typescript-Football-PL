@@ -67,35 +67,38 @@ function App() {
 
 	return (
 		<div className="container">
-			<div className="content-block content-block-intro">
-				<h1 className="heading">Premier League Results</h1>
-				<p className="text">
-					Welcome to the Premier League Results app, meticulously
-					crafted to enhance your knowledge and understanding of one
-					of the most prestigious football leagues in the world.
-					Designed with a focus on expanding your horizons, this app
-					offers a wealth of information, from match outcomes and
-					insightful player analyses to captivating historical data
-				</p>
-				<p className="text">
-					Embrace the opportunity to delve deeper into the intricacies
-					of the Premier League, empowering yourself with a
-					comprehensive understanding of the game and its captivating
-					evolution. Get ready to embark on a journey of knowledge and
-					discovery with our immersive app experience.
-				</p>
-			</div>
-			{lastFixture?.response[0] && (
-				<div className="content-block content-block-result">
+			<div className="section-dude">
+				<div className="content-block content-block-intro">
+					<h1 className="heading">Premier League Results</h1>
+					<p className="text">
+						Welcome to the Premier League Results app, meticulously
+						crafted to enhance your knowledge and understanding of one
+						of the most prestigious football leagues in the world.
+						Designed with a focus on expanding your horizons, this app
+						offers a wealth of information, from match outcomes and
+						insightful player analyses to captivating historical data
+					</p>
+					<p className="text">
+						Embrace the opportunity to delve deeper into the intricacies
+						of the Premier League, empowering yourself with a
+						comprehensive understanding of the game and its captivating
+						evolution. Get ready to embark on a journey of knowledge and
+						discovery with our immersive app experience.
+					</p>
+				</div>
+				{lastFixture?.response[0] && (
+				<div className="content-block-result">
 					<Fixture
+						date={lastFixture.response[0].fixture.date}
 						homeTeamName={lastFixture.response[0].teams.home.name}
 						homeTeamLogo={lastFixture.response[0].teams.home.logo}
 						homeTeamGoals={lastFixture.response[0].goals.home}
 						awayTeamName={lastFixture.response[0].teams.away.name}
 						awayTeamLogo={lastFixture.response[0].teams.away.logo}
 						awayTeamGoals={lastFixture.response[0].goals.away}
-					/>
+						/>
 					<Fixture
+						date={nextFixture.response[0].fixture.date}
 						homeTeamName={nextFixture.response[0].teams.home.name}
 						homeTeamLogo={nextFixture.response[0].teams.home.logo}
 						awayTeamName={nextFixture.response[0].teams.away.name}
@@ -103,7 +106,8 @@ function App() {
 					/>
 				</div>
 			)}
-			<div className="content-block">
+			</div>
+			<div className="content-block content-block-standings-table">
 				{data && <StandingsTable data={data?.response[0].league.standings[0]} />}
 			</div>
 		</div>
