@@ -70,7 +70,7 @@ function UCL() {
 				<div className="section-dude">
 					<div className="content-block-result">
 						<Fixture
-							date={lastFixture.response[0]?.fixture?.date}
+							date={lastFixture.response[0].fixture.date}
 							homeTeamName={lastFixture.response[0].teams.home.name}
 							homeTeamLogo={lastFixture.response[0].teams.home.logo}
 							homeTeamGoals={lastFixture.response[0].goals.home}
