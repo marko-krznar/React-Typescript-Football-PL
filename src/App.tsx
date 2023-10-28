@@ -14,7 +14,6 @@ function App() {
 	useEffect(() => {
 		const headers = {
 			'x-rapidapi-host': 'v3.football.api-sports.io',
-			// 'x-rapidapi-key': '7ba7477f0c4de0f9fe92bc247995d041', OLD KEY
 			'x-rapidapi-key': '73d29a59228a9218095f7d1560ddb711',
 		};
 
@@ -58,7 +57,7 @@ function App() {
 
 	return (
 		<div className="container">
-			<div className="section-dude">
+			<div className="section-grid">
 				<div className="content-block content-block-intro">
 					<h1 className="heading">Premier League Results for Arsenal</h1>
 					<p className="text">
