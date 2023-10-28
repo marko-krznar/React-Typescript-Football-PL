@@ -16,7 +16,7 @@ export interface StandingsProp {
 
 function StandingsTable(standings: StandingsProp) {
 	const { data } = standings;
-	
+
 	return (
 		<table>
 			<tbody>

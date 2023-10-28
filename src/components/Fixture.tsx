@@ -15,18 +15,18 @@ function Fixture({
 	homeTeamGoals = '-',
 	awayTeamName,
 	awayTeamLogo,
-	awayTeamGoals = '-'
+	awayTeamGoals = '-',
 }: FixtureProps) {
 	const formattedDate = new Intl.DateTimeFormat('hr-HR', {
 		year: 'numeric',
 		month: '2-digit',
 		day: '2-digit',
-	  }).format(new Date(date));
-	
-	  const formattedTime = new Intl.DateTimeFormat('hr-HR', {
+	}).format(new Date(date));
+
+	const formattedTime = new Intl.DateTimeFormat('hr-HR', {
 		hour: '2-digit',
 		minute: '2-digit',
-	  }).format(new Date(date));
+	}).format(new Date(date));
 
 	return (
 		<div className="content-block fixture">
@@ -50,7 +50,7 @@ function Fixture({
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
 
-export default Fixture
+export default Fixture;
