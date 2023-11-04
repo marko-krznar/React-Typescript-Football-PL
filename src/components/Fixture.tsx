@@ -32,25 +32,6 @@ function Fixture({
 
 	return (
 		<div className="fixture">
-			{/* <div className="schedule">
-				<span className="text date">{formattedDate}</span>
-				<span className="text time">{formattedTime}</span>
-			</div>
-			<div className="team">
-				<img className="teaml-logo" src={homeTeamLogo} alt={homeTeamName} />
-				<span className="text">VS</span>
-				<img className="teaml-logo" src={awayTeamLogo} alt={awayTeamName} />
-			</div>
-			<div className="team-results">
-				<div className="team-result">
-					<span className="text">{homeTeamName}</span>
-					<span className="text">{homeTeamGoals}</span>
-				</div>
-				<div className="team-result">
-					<span className="text">{awayTeamName}</span>
-					<span className="text">{awayTeamGoals}</span>
-				</div>
-			</div> */}
 			<div className="fixture-row">
 				<div className="schedule">
 					<span className="text date">{formattedDate}</span>
