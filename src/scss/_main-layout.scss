@@ -28,47 +28,43 @@
 		overflow: auto;
 	}
 
-	.content-block-result {
+	.content-block-fixtures {
 		display: flex;
-		gap: 2rem;
+		flex-direction: column;
+		gap: 1.5rem;
 
-		.fixture {
-			display: flex;
-			flex-basis: 50%;
-			flex-direction: column;
-			gap: 2rem;
-		}
-
-		.schedule {
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-			text-align: center;
-			font-size: 1rem;
-		}
-
-		.team-results {
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-		}
-
-		.team {
+		.fixture-row {
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
-		}
-
-		.team-result {
-			font-size: 1.5rem;
-			display: flex;
-			justify-content: space-between;
 			gap: 1rem;
-		}
-	}
 
-	img.teaml-logo {
-		max-width: 5rem;
+			.schedule {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.team-wrapper {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+				flex: 1;
+			}
+
+			.team {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+
+				.text-club-name {
+					flex-grow: 1;
+				}
+			}
+
+			img.teaml-logo {
+				max-height: 1.25rem;
+			}
+		}
 	}
 }
 
@@ -94,12 +90,6 @@
 	}
 }
 
-@media (max-width: 820px) {
-	.premier-league-app .content-block-result {
-		flex-direction: column;
-	}
-}
-
 @media (max-width: 618px) {
 	.premier-league-app {
 		.container {
@@ -113,14 +103,6 @@
 
 		.content-block {
 			padding: 2rem;
-		}
-
-		.content-block-result {
-			gap: 1rem;
-
-			.team-result {
-				font-size: 1rem;
-			}
 		}
 
 		.content-block-standings-table {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -7,7 +8,7 @@ import Fixture from './components/Fixture';
 import './scss/style.scss';
 
 function App() {
-	const [data, setData] = useState<any>(null);
+	const [standings, setStandings] = useState<any>(null);
 	const [lastFixture, setLastFixture] = useState<any>(null);
 	const [nextFixture, setNextFixture] = useState<any>(null);
 
@@ -23,7 +24,7 @@ function App() {
 				{ headers }
 			)
 			.then((response) => {
-				setData(response.data);
+				setStandings(response.data);
 			})
 
 			.catch((error) => {
@@ -55,11 +56,24 @@ function App() {
 			});
 	}, []);
 
+	if (standings !== null && lastFixture !== null && nextFixture !== null) {
+		localStorage.setItem(
+			'testEplData',
+			JSON.stringify({
+				eplStandings: standings,
+				eplLastFixture: lastFixture,
+				eplNextFixture: nextFixture,
+			})
+		);
+	}
+
+	const savedData: any = localStorage.getItem('testEplData');
+
 	return (
 		<div className="container">
 			<div className="section-grid">
 				<div className="content-block content-block-intro">
-					<h1 className="heading">Premier League Results for Arsenal</h1>
+					<h1 className="heading">Arsenal</h1>
 					<p className="text">
 						Stay updated with the latest match results, upcoming games and
 						position in Premier League. This app has been meticulously crafted
@@ -67,30 +81,69 @@ function App() {
 						development and data presentation.
 					</p>
 				</div>
-				{lastFixture?.response[0] && nextFixture?.response[0] && (
-					<div className="content-block-result">
-						<Fixture
-							date={lastFixture.response[0].fixture.date}
-							homeTeamName={lastFixture.response[0].teams.home.name}
-							homeTeamLogo={lastFixture.response[0].teams.home.logo}
-							homeTeamGoals={lastFixture.response[0].goals.home}
-							awayTeamName={lastFixture.response[0].teams.away.name}
-							awayTeamLogo={lastFixture.response[0].teams.away.logo}
-							awayTeamGoals={lastFixture.response[0].goals.away}
-						/>
-						<Fixture
-							date={nextFixture.response[0].fixture.date}
-							homeTeamName={nextFixture.response[0].teams.home.name}
-							homeTeamLogo={nextFixture.response[0].teams.home.logo}
-							awayTeamName={nextFixture.response[0].teams.away.name}
-							awayTeamLogo={nextFixture.response[0].teams.away.logo}
-						/>
-					</div>
-				)}
+				{JSON.parse(savedData).eplLastFixture.response[0].fixture.date &&
+					JSON.parse(savedData).eplNextFixture.response[0].fixture.date && (
+						<div className="content-block content-block-fixtures">
+							<h1 className="heading">Premier League</h1>
+							<Fixture
+								date={
+									JSON.parse(savedData).eplLastFixture.response[0].fixture.date
+								}
+								homeTeamName={
+									JSON.parse(savedData).eplLastFixture.response[0].teams.home
+										.name
+								}
+								homeTeamLogo={
+									JSON.parse(savedData).eplLastFixture.response[0].teams.home
+										.logo
+								}
+								homeTeamGoals={
+									JSON.parse(savedData).eplLastFixture.response[0].goals.home
+								}
+								awayTeamName={
+									JSON.parse(savedData).eplLastFixture.response[0].teams.away
+										.name
+								}
+								awayTeamLogo={
+									JSON.parse(savedData).eplLastFixture.response[0].teams.away
+										.logo
+								}
+								awayTeamGoals={
+									JSON.parse(savedData).eplLastFixture.response[0].goals.away
+								}
+							/>
+							<Fixture
+								date={
+									JSON.parse(savedData).eplNextFixture.response[0].fixture.date
+								}
+								homeTeamName={
+									JSON.parse(savedData).eplNextFixture.response[0].teams.home
+										.name
+								}
+								homeTeamLogo={
+									JSON.parse(savedData).eplNextFixture.response[0].teams.home
+										.logo
+								}
+								awayTeamName={
+									JSON.parse(savedData).eplNextFixture.response[0].teams.away
+										.name
+								}
+								awayTeamLogo={
+									JSON.parse(savedData).eplNextFixture.response[0].teams.away
+										.logo
+								}
+							/>
+						</div>
+					)}
 			</div>
-			{data?.response[0]?.league?.standings[0] && (
+
+			{JSON.parse(savedData).eplStandings.response[0].league.standings[0] && (
 				<div className="content-block content-block-standings-table">
-					<StandingsTable data={data.response[0].league.standings[0]} />
+					<StandingsTable
+						data={
+							JSON.parse(savedData).eplStandings.response[0].league.standings[0]
+						}
+					/>
 				</div>
 			)}
 		</div>
