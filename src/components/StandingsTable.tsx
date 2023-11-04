@@ -16,7 +16,7 @@ export interface StandingsProp {
 
 function StandingsTable(standings: StandingsProp) {
 	const { data } = standings;
-	
+
 	return (
 		<table>
 			<tbody>
@@ -31,7 +31,10 @@ function StandingsTable(standings: StandingsProp) {
 						const { rank, team, points, all } = teamItem;
 
 						return (
-							<tr key={team?.id}>
+							<tr
+								key={team?.id}
+								className={team?.name === 'Arsenal' ? 'row-arsenal' : ''}
+							>
 								<td>{rank}</td>
 								<td>{team?.name}</td>
 								<td>{all?.played}</td>
