@@ -66,6 +66,15 @@
 			}
 		}
 	}
+
+	.section-two-col {
+		display: flex;
+		gap: 2rem;
+
+		.content-block-fixtures {
+			flex-basis: 50%;
+		}
+	}
 }
 
 @media (max-width: 1439px) {
