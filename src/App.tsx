@@ -17,83 +17,77 @@ function App() {
 	const [nextFixtureUcl, setNextFixtureUcl] = useState<any>(null);
 
 	useEffect(() => {
-		const headers = {
-			'x-rapidapi-host': 'v3.football.api-sports.io',
-			'x-rapidapi-key': '73d29a59228a9218095f7d1560ddb711',
+		const fetchData = async () => {
+			// Define headers for the API calls
+			const headers = {
+				'x-rapidapi-host': 'v3.football.api-sports.io',
+				'x-rapidapi-key': '73d29a59228a9218095f7d1560ddb711',
+			};
+
+			try {
+				// Use Promise.all to make multiple API calls concurrently
+				const [
+					standingsResponse,
+					lastFixtureResponse,
+					nextFixtureResponse,
+					standingsUclResponse,
+					lastFixtureUclResponse,
+					nextFixtureUclResponse,
+				] = await Promise.all([
+					// Make the first API call for standings
+					axios.get(
+						'https://v3.football.api-sports.io/standings?league=39&season=2023',
+						{ headers }
+					),
+
+					// Make the second API call for the last fixture
+					axios.get(
+						'https://v3.football.api-sports.io/fixtures?league=39&season=2023&team=42&last=1',
+						{ headers }
+					),
+
+					// Make the third API call for the next fixture
+					axios.get(
+						'https://v3.football.api-sports.io/fixtures?league=39&season=2023&team=42&next=1',
+						{ headers }
+					),
+
+					// Make the fourth API call for UCL standings
+					axios.get(
+						'https://v3.football.api-sports.io/standings?league=2&season=2023',
+						{ headers }
+					),
+
+					// Make the fifth API call for the last UCL fixture
+					axios.get(
+						'https://v3.football.api-sports.io/fixtures?league=2&season=2023&team=42&last=1',
+						{ headers }
+					),
+
+					// Make the sixth API call for the next UCL fixture
+					axios.get(
+						'https://v3.football.api-sports.io/fixtures?league=2&season=2023&team=42&next=1',
+						{ headers }
+					),
+				]);
+
+				// Set the state with the data received from API responses
+				setStandings(standingsResponse.data);
+				setLastFixture(lastFixtureResponse.data);
+				setNextFixture(nextFixtureResponse.data);
+				setStandingsUcl(standingsUclResponse.data);
+				setLastFixtureUcl(lastFixtureUclResponse.data);
+				setNextFixtureUcl(nextFixtureUclResponse.data);
+			} catch (error) {
+				// Handle errors if any of the API calls fail
+				console.error('Error:', error);
+			}
 		};
 
-		axios
-			.get(
-				'https://v3.football.api-sports.io/standings?league=39&season=2023',
-				{ headers }
-			)
-			.then((response) => {
-				setStandings(response.data);
-			})
+		// Call the fetchData function when the component mounts
+		void fetchData();
 
-			.catch((error) => {
-				console.error('Error:', error);
-			});
-
-		axios
-			.get(
-				'https://v3.football.api-sports.io/fixtures?league=39&season=2023&team=42&last=1',
-				{ headers }
-			)
-			.then((response) => {
-				setLastFixture(response.data);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
-
-		axios
-			.get(
-				'https://v3.football.api-sports.io/fixtures?league=39&season=2023&team=42&next=1',
-				{ headers }
-			)
-			.then((response) => {
-				setNextFixture(response.data);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
-
-		// Get UCL data
-		axios
-			.get('https://v3.football.api-sports.io/standings?league=2&season=2023', {
-				headers,
-			})
-			.then((response) => {
-				setStandingsUcl(response.data);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
-
-		axios
-			.get(
-				'https://v3.football.api-sports.io/fixtures?league=2&season=2023&team=42&last=1',
-				{ headers }
-			)
-			.then((response) => {
-				setLastFixtureUcl(response.data);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
-
-		axios
-			.get(
-				'https://v3.football.api-sports.io/fixtures?league=2&season=2023&team=42&next=1',
-				{ headers }
-			)
-			.then((response) => {
-				setNextFixtureUcl(response.data);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
+		// Optionally, add cleanup code if needed
 	}, []);
 
 	if (standings !== null && lastFixture !== null && nextFixture !== null) {
@@ -108,6 +102,10 @@ function App() {
 	}
 
 	const savedData: any = localStorage.getItem('eplData');
+
+	// console.log('standingsUcl', standingsUcl);
+	// console.log('lastFixtureUcl', lastFixtureUcl);
+	// console.log('nextFixtureUcl', nextFixtureUcl);
 
 	if (
 		standingsUcl !== null &&
@@ -128,7 +126,7 @@ function App() {
 
 	// console.log('savedDataUcl', JSON.parse(savedDataUcl));
 	// console.log('savedData', JSON.parse(savedData));
-	console.log('UCL last fixture', JSON.parse(savedDataUcl)?.uclLastFixture);
+	// console.log('UCL last fixture', JSON.parse(savedDataUcl)?.uclLastFixture);
 
 	return (
 		<div className="container">
@@ -264,6 +262,10 @@ function App() {
 
 			{JSON.parse(savedData).eplStandings.response[0]?.league.standings[0] && (
 				<div className="content-block content-block-standings-table">
+					<div className="button-group-wrapper">
+						<button className="button button-active">Premier League</button>
+						<button className="button">UEFA Champions League</button>
+					</div>
 					<StandingsTable
 						data={
 							JSON.parse(savedData).eplStandings.response[0].league.standings[0]

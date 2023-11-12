@@ -26,6 +26,7 @@
 	.content-block-standings-table {
 		width: calc(40% - 1rem);
 		overflow: auto;
+		position: relative;
 	}
 
 	.content-block-fixtures {

@@ -1,0 +1,16 @@
+.button-group-wrapper {
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+button.button {
+	padding: 0.5rem 2rem;
+	font-size: 1rem;
+	border: 1px solid red;
+	border-radius: 0.5rem;
+}
