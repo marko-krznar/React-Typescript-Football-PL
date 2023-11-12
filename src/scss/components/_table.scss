@@ -1,17 +1,22 @@
-table tr {
-	&.row-arsenal td {
-		color: $headline-color;
-	}
+table {
+	position: relative;
+	z-index: 20;
 
-	&:first-child {
-		th {
-			padding-top: 0;
+	tr {
+		&.row-arsenal td {
+			color: $headline-color;
 		}
-	}
 
-	&:last-child {
-		td {
-			padding-bottom: 0;
+		&:first-child {
+			th {
+				padding-top: 0;
+			}
+		}
+
+		&:last-child {
+			td {
+				padding-bottom: 0;
+			}
 		}
 	}
 }

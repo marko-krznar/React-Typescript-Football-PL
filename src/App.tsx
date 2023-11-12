@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import classNames from 'classnames';
 
 import StandingsTable from './components/StandingsTable';
 import Fixture from './components/Fixture';
@@ -15,6 +17,8 @@ function App() {
 	const [standingsUcl, setStandingsUcl] = useState<any>(null);
 	const [lastFixtureUcl, setLastFixtureUcl] = useState<any>(null);
 	const [nextFixtureUcl, setNextFixtureUcl] = useState<any>(null);
+	// State for active button
+	const [activeButton, setActiveButton] = useState<string>('pl');
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -90,7 +94,11 @@ function App() {
 		// Optionally, add cleanup code if needed
 	}, []);
 
-	if (standings !== null && lastFixture !== null && nextFixture !== null) {
+	if (
+		standings?.results > 0 &&
+		lastFixture?.results > 0 &&
+		nextFixture?.results > 0
+	) {
 		localStorage.setItem(
 			'eplData',
 			JSON.stringify({
@@ -108,9 +116,9 @@ function App() {
 	// console.log('nextFixtureUcl', nextFixtureUcl);
 
 	if (
-		standingsUcl !== null &&
-		lastFixtureUcl !== null &&
-		nextFixtureUcl !== null
+		standingsUcl?.results > 0 &&
+		lastFixtureUcl?.results > 0 &&
+		nextFixtureUcl?.results > 0
 	) {
 		localStorage.setItem(
 			'uclData',
@@ -127,6 +135,17 @@ function App() {
 	// console.log('savedDataUcl', JSON.parse(savedDataUcl));
 	// console.log('savedData', JSON.parse(savedData));
 	// console.log('UCL last fixture', JSON.parse(savedDataUcl)?.uclLastFixture);
+	// console.log('standings', standings);
+
+	// const buttonClassnames = classNames('button', {
+	// 	'button-active': activeButton === 'pl',
+	// });
+
+	const getButtonClassnames = (buttonName: string) => {
+		return classNames('button', {
+			'button-active': activeButton === buttonName,
+		});
+	};
 
 	return (
 		<div className="container">
@@ -263,8 +282,18 @@ function App() {
 			{JSON.parse(savedData).eplStandings.response[0]?.league.standings[0] && (
 				<div className="content-block content-block-standings-table">
 					<div className="button-group-wrapper">
-						<button className="button button-active">Premier League</button>
-						<button className="button">UEFA Champions League</button>
+						<button
+							className={getButtonClassnames('pl')}
+							onClick={() => setActiveButton('pl')}
+						>
+							Premier League
+						</button>
+						<button
+							className={getButtonClassnames('ucl')}
+							onClick={() => setActiveButton('ucl')}
+						>
+							UEFA Champions League
+						</button>
 					</div>
 					<StandingsTable
 						data={

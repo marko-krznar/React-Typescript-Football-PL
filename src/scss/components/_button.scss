@@ -11,6 +11,27 @@
 button.button {
 	padding: 0.5rem 2rem;
 	font-size: 1rem;
-	border: 1px solid red;
+	border: 1px solid $light-background;
 	border-radius: 0.5rem;
+	position: relative;
+
+	&.button-active {
+		background: transparent;
+		border: transparent;
+		color: $headline-color;
+
+		&::after {
+			content: '';
+			width: 50%;
+			height: 1px;
+			background: $text-colors;
+			position: absolute;
+			inset: 100% 0 0 0;
+			margin: auto;
+		}
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
 }
