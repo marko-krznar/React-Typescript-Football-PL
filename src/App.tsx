@@ -160,60 +160,69 @@ function App() {
 					</p>
 				</div>
 				<div className="section-two-col">
-					{JSON.parse(savedData).eplLastFixture.response[0]?.fixture.date &&
-						JSON.parse(savedData).eplNextFixture.response[0]?.fixture.date && (
+					{JSON.parse(savedData)?.eplLastFixture?.response[0]?.fixture.date &&
+						JSON.parse(savedData)?.eplNextFixture?.response[0]?.fixture
+							.date && (
 							<div className="content-block content-block-fixtures">
 								<h2 className="heading">Premier League</h2>
 								<Fixture
 									date={
-										JSON.parse(savedData).eplLastFixture.response[0].fixture
+										JSON.parse(savedData)?.eplLastFixture?.response[0].fixture
 											.date
 									}
 									homeTeamName={
-										JSON.parse(savedData).eplLastFixture.response[0].teams.home
-											.name
+										JSON.parse(savedData)?.eplLastFixture?.response[0].teams
+											.home.name
 									}
 									homeTeamLogo={
-										JSON.parse(savedData).eplLastFixture.response[0].teams.home
-											.logo
+										JSON.parse(savedData)?.eplLastFixture?.response[0].teams
+											.home.logo
 									}
 									homeTeamGoals={
-										JSON.parse(savedData).eplLastFixture.response[0].goals.home
+										JSON.parse(savedData)?.eplLastFixture?.response[0].goals
+											.home
 									}
 									awayTeamName={
-										JSON.parse(savedData).eplLastFixture.response[0].teams.away
-											.name
+										JSON.parse(savedData)?.eplLastFixture?.response[0].teams
+											.away.name
 									}
 									awayTeamLogo={
-										JSON.parse(savedData).eplLastFixture.response[0].teams.away
-											.logo
+										JSON.parse(savedData)?.eplLastFixture?.response[0].teams
+											.away.logo
 									}
 									awayTeamGoals={
-										JSON.parse(savedData).eplLastFixture.response[0].goals.away
+										JSON.parse(savedData)?.eplLastFixture?.response[0].goals
+											.away
 									}
 								/>
 								<Fixture
 									date={
-										JSON.parse(savedData).eplNextFixture.response[0].fixture
+										JSON.parse(savedData)?.eplNextFixture?.response[0].fixture
 											.date
 									}
 									homeTeamName={
-										JSON.parse(savedData).eplNextFixture.response[0].teams.home
-											.name
+										JSON.parse(savedData)?.eplNextFixture?.response[0].teams
+											.home.name
 									}
 									homeTeamLogo={
-										JSON.parse(savedData).eplNextFixture.response[0].teams.home
-											.logo
+										JSON.parse(savedData)?.eplNextFixture?.response[0].teams
+											.home.logo
 									}
 									awayTeamName={
-										JSON.parse(savedData).eplNextFixture.response[0].teams.away
-											.name
+										JSON.parse(savedData)?.eplNextFixture?.response[0].teams
+											.away.name
 									}
 									awayTeamLogo={
-										JSON.parse(savedData).eplNextFixture.response[0].teams.away
-											.logo
+										JSON.parse(savedData)?.eplNextFixture?.response[0].teams
+											.away.logo
 									}
 								/>
+								<button
+									className={getButtonClassnames('pl')}
+									onClick={() => setActiveButton('pl')}
+								>
+									Standings
+								</button>
 							</div>
 						)}
 					{JSON.parse(savedDataUcl)?.uclLastFixture?.response[0]?.fixture
@@ -274,34 +283,28 @@ function App() {
 											.away.logo
 									}
 								/>
+								<button
+									className={getButtonClassnames('ucl')}
+									onClick={() => setActiveButton('ucl')}
+								>
+									Standings
+								</button>
 							</div>
 						)}
 				</div>
 			</div>
 
-			{JSON.parse(savedData).eplStandings.response[0]?.league.standings[0] && (
-				<div className="content-block content-block-standings-table">
-					<div className="button-group-wrapper">
-						<button
-							className={getButtonClassnames('pl')}
-							onClick={() => setActiveButton('pl')}
-						>
-							Premier League
-						</button>
-						<button
-							className={getButtonClassnames('ucl')}
-							onClick={() => setActiveButton('ucl')}
-						>
-							UEFA Champions League
-						</button>
-					</div>
-					<StandingsTable
-						data={
-							JSON.parse(savedData).eplStandings.response[0].league.standings[0]
-						}
-					/>
-				</div>
-			)}
+			<div className="content-block content-block-standings-table">
+				<StandingsTable
+					data={
+						activeButton === 'pl'
+							? JSON.parse(savedData).eplStandings.response[0].league
+									.standings[0]
+							: JSON.parse(savedDataUcl)?.uclStandings?.response[0]?.league
+									?.standings?.[1]
+					}
+				/>
+			</div>
 		</div>
 	);
 }
