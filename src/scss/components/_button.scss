@@ -1,0 +1,17 @@
+button.button {
+	padding: 0.5rem 2rem;
+	font-size: 1rem;
+	border: 1px solid $light-background;
+	border-radius: 0.5rem;
+	position: relative;
+
+	&.button-active {
+		background: transparent;
+		border-color: transparent;
+		color: $headline-color;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+}

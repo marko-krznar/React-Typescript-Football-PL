@@ -25,7 +25,9 @@
 
 	.content-block-standings-table {
 		width: calc(40% - 1rem);
+		height: calc(100vh - 4rem);
 		overflow: auto;
+		position: relative;
 	}
 
 	.content-block-fixtures {
@@ -64,6 +66,15 @@
 			img.teaml-logo {
 				max-height: 1.25rem;
 			}
+		}
+	}
+
+	.section-two-col {
+		display: flex;
+		gap: 2rem;
+
+		.content-block-fixtures {
+			flex-basis: 50%;
 		}
 	}
 }
@@ -109,6 +120,11 @@
 			justify-content: left;
 			white-space: nowrap;
 			overflow-x: scroll;
+		}
+
+		.section-two-col {
+			flex-direction: column;
+			gap: 1rem;
 		}
 	}
 }
