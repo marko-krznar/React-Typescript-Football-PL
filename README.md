@@ -4,6 +4,7 @@ The Arsenal Football App is a user-friendly application designed for learning pu
 
 - Arsenal's Last Game
 - Premier League Table
+- Uefa Champions League Table
 
 This project was bootstrapped with [Vite](https://vitejs.dev/).
 
@@ -16,9 +17,11 @@ In the project directory, you can run:
 Runs the app in the development mode.
 
 ## Features
+
 - display last Arsenal game result
 
 ## Technologies
+
 - ReactJS
 - Typescript
 - Scss
