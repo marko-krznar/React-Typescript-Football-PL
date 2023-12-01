@@ -3,7 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
-	"homepage": "https://github.com/marko-krznar/React-Typescript-Football-PL/",
+	"homepage": "https://marko-krznar.github.io/React-Typescript-Football-PL/",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
