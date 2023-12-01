@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import classNames from 'classnames';
 
 import StandingsTable from './components/StandingsTable';
 import Fixture from './components/Fixture';
-
 import './scss/style.scss';
 
 function App() {
@@ -111,10 +108,6 @@ function App() {
 
 	const savedData: any = localStorage.getItem('eplData');
 
-	// console.log('standingsUcl', standingsUcl);
-	// console.log('lastFixtureUcl', lastFixtureUcl);
-	// console.log('nextFixtureUcl', nextFixtureUcl);
-
 	if (
 		standingsUcl?.results > 0 &&
 		lastFixtureUcl?.results > 0 &&
@@ -131,15 +124,6 @@ function App() {
 	}
 
 	const savedDataUcl: any = localStorage.getItem('uclData');
-
-	// console.log('savedDataUcl', JSON.parse(savedDataUcl));
-	// console.log('savedData', JSON.parse(savedData));
-	// console.log('UCL last fixture', JSON.parse(savedDataUcl)?.uclLastFixture);
-	// console.log('standings', standings);
-
-	// const buttonClassnames = classNames('button', {
-	// 	'button-active': activeButton === 'pl',
-	// });
 
 	const getButtonClassnames = (buttonName: string) => {
 		return classNames('button', {
@@ -298,7 +282,7 @@ function App() {
 				<StandingsTable
 					data={
 						activeButton === 'pl'
-							? JSON.parse(savedData).eplStandings.response[0].league
+							? JSON.parse(savedData)?.eplStandings?.response[0]?.league
 									.standings[0]
 							: JSON.parse(savedDataUcl)?.uclStandings?.response[0]?.league
 									?.standings?.[1]
