@@ -14,3 +14,9 @@ th,
 td {
 	color: $text-colors;
 }
+
+.fixture-gameweek {
+	display: inline-block;
+	color: $headline-color;
+	margin-bottom: 1rem;
+}

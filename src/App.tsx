@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import classNames from 'classnames';
 
 import StandingsTable from './components/StandingsTable';
 import Fixture from './components/Fixture';
@@ -14,8 +13,6 @@ function App() {
 	const [standingsUcl, setStandingsUcl] = useState<any>(null);
 	const [lastFixtureUcl, setLastFixtureUcl] = useState<any>(null);
 	const [nextFixtureUcl, setNextFixtureUcl] = useState<any>(null);
-	// State for active button
-	const [activeButton, setActiveButton] = useState<string>('pl');
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -123,171 +120,156 @@ function App() {
 		);
 	}
 
-	const savedDataUcl: any = localStorage.getItem('uclData');
-
-	const getButtonClassnames = (buttonName: string) => {
-		return classNames('button', {
-			'button-active': activeButton === buttonName,
-		});
-	};
-
 	return (
 		<div className="container">
 			<div className="section-grid">
-				<div className="content-block content-block-intro">
-					<h1 className="heading">Arsenal</h1>
+				<div className="content-block-intro">
+					<h1 className="heading">Football Results</h1>
 					<p className="text">
-						Stay updated with the latest match results, upcoming games and
-						position in Premier League. This app has been meticulously crafted
-						as a learning project to enhance my skills and knowledge in app
-						development and data presentation.
+						Stay updated with the latest match results, upcoming games and position in Premier League. This app has been meticulously crafted as a learning project to enhance my skills and knowledge in app development and data presentation.
 					</p>
 				</div>
 				<div className="section-two-col">
 					{JSON.parse(savedData)?.eplLastFixture?.response[0]?.fixture.date &&
 						JSON.parse(savedData)?.eplNextFixture?.response[0]?.fixture
 							.date && (
-							<div className="content-block content-block-fixtures">
-								<h2 className="heading">Premier League</h2>
-								<Fixture
-									date={
-										JSON.parse(savedData)?.eplLastFixture?.response[0].fixture
-											.date
-									}
-									homeTeamName={
-										JSON.parse(savedData)?.eplLastFixture?.response[0].teams
-											.home.name
-									}
-									homeTeamLogo={
-										JSON.parse(savedData)?.eplLastFixture?.response[0].teams
-											.home.logo
-									}
-									homeTeamGoals={
-										JSON.parse(savedData)?.eplLastFixture?.response[0].goals
-											.home
-									}
-									awayTeamName={
-										JSON.parse(savedData)?.eplLastFixture?.response[0].teams
-											.away.name
-									}
-									awayTeamLogo={
-										JSON.parse(savedData)?.eplLastFixture?.response[0].teams
-											.away.logo
-									}
-									awayTeamGoals={
-										JSON.parse(savedData)?.eplLastFixture?.response[0].goals
-											.away
-									}
-								/>
-								<Fixture
-									date={
-										JSON.parse(savedData)?.eplNextFixture?.response[0].fixture
-											.date
-									}
-									homeTeamName={
-										JSON.parse(savedData)?.eplNextFixture?.response[0].teams
-											.home.name
-									}
-									homeTeamLogo={
-										JSON.parse(savedData)?.eplNextFixture?.response[0].teams
-											.home.logo
-									}
-									awayTeamName={
-										JSON.parse(savedData)?.eplNextFixture?.response[0].teams
-											.away.name
-									}
-									awayTeamLogo={
-										JSON.parse(savedData)?.eplNextFixture?.response[0].teams
-											.away.logo
-									}
-								/>
-								<button
-									className={getButtonClassnames('pl')}
-									onClick={() => setActiveButton('pl')}
-								>
-									Standings
-								</button>
-							</div>
-						)}
-					{JSON.parse(savedDataUcl)?.uclLastFixture?.response[0]?.fixture
-						?.date &&
-						JSON.parse(savedDataUcl)?.uclNextFixture?.response[0]?.fixture
-							?.date && (
-							<div className="content-block content-block-fixtures">
-								<h2 className="heading">UEFA Champions League</h2>
-								<Fixture
-									date={
-										JSON.parse(savedDataUcl).uclLastFixture.response[0].fixture
-											.date
-									}
-									homeTeamName={
-										JSON.parse(savedDataUcl).uclLastFixture.response[0].teams
-											.home.name
-									}
-									homeTeamLogo={
-										JSON.parse(savedDataUcl).uclLastFixture.response[0].teams
-											.home.logo
-									}
-									homeTeamGoals={
-										JSON.parse(savedDataUcl).uclLastFixture.response[0].goals
-											.home
-									}
-									awayTeamName={
-										JSON.parse(savedDataUcl).uclLastFixture.response[0].teams
-											.away.name
-									}
-									awayTeamLogo={
-										JSON.parse(savedDataUcl).uclLastFixture.response[0].teams
-											.away.logo
-									}
-									awayTeamGoals={
-										JSON.parse(savedDataUcl).uclLastFixture.response[0].goals
-											.away
-									}
-								/>
-								<Fixture
-									date={
-										JSON.parse(savedDataUcl).uclNextFixture.response[0].fixture
-											.date
-									}
-									homeTeamName={
-										JSON.parse(savedDataUcl).uclNextFixture.response[0].teams
-											.home.name
-									}
-									homeTeamLogo={
-										JSON.parse(savedDataUcl).uclNextFixture.response[0].teams
-											.home.logo
-									}
-									awayTeamName={
-										JSON.parse(savedDataUcl).uclNextFixture.response[0].teams
-											.away.name
-									}
-									awayTeamLogo={
-										JSON.parse(savedDataUcl).uclNextFixture.response[0].teams
-											.away.logo
-									}
-								/>
-								<button
-									className={getButtonClassnames('ucl')}
-									onClick={() => setActiveButton('ucl')}
-								>
-									Standings
-								</button>
+							<div className="content-block">
+								<div className="content-block-fixtures">
+									<h2 className="heading">Premier League</h2>
+									<div className="fixtures-wrapper">
+										<div className="previous-fixtures">
+											{/* TODO make fixture-gameweek component */}
+											<span className="fixture-gameweek">
+												Gameweek 10
+											</span>
+											<Fixture
+												date={
+													JSON.parse(savedData)?.eplLastFixture?.response[0].fixture
+														.date
+												}
+												homeTeamName={
+													JSON.parse(savedData)?.eplLastFixture?.response[0].teams
+														.home.name
+												}
+												homeTeamLogo={
+													JSON.parse(savedData)?.eplLastFixture?.response[0].teams
+														.home.logo
+												}
+												homeTeamGoals={
+													JSON.parse(savedData)?.eplLastFixture?.response[0].goals
+														.home
+												}
+												awayTeamName={
+													JSON.parse(savedData)?.eplLastFixture?.response[0].teams
+														.away.name
+												}
+												awayTeamLogo={
+													JSON.parse(savedData)?.eplLastFixture?.response[0].teams
+														.away.logo
+												}
+												awayTeamGoals={
+													JSON.parse(savedData)?.eplLastFixture?.response[0].goals
+														.away
+												}
+											/>
+										</div>
+										<div className="future-fixtures">
+											<span className="fixture-gameweek">
+												Gameweek 11
+											</span>
+											<Fixture
+												date={
+													JSON.parse(savedData)?.eplNextFixture?.response[0].fixture
+														.date
+												}
+												homeTeamName={
+													JSON.parse(savedData)?.eplNextFixture?.response[0].teams
+														.home.name
+												}
+												homeTeamLogo={
+													JSON.parse(savedData)?.eplNextFixture?.response[0].teams
+														.home.logo
+												}
+												awayTeamName={
+													JSON.parse(savedData)?.eplNextFixture?.response[0].teams
+														.away.name
+												}
+												awayTeamLogo={
+													JSON.parse(savedData)?.eplNextFixture?.response[0].teams
+														.away.logo
+												}
+											/>
+										</div>
+									</div>
+								</div>
+								{/* TODO Refactor when new design is created */}
+								{/* {
+									JSON.parse(savedDataUcl)?.uclLastFixture?.response[0]?.fixture?.date &&
+									JSON.parse(savedDataUcl)?.uclNextFixture?.response[0]?.fixture?.date && (
+										<div className="content-block-fixtures">
+											<h2 className="heading">UEFA Champions League</h2>
+											<Fixture
+												date={
+													JSON.parse(savedDataUcl).uclLastFixture.response[0].fixture
+														.date
+												}
+												homeTeamName={
+													JSON.parse(savedDataUcl).uclLastFixture.response[0].teams
+														.home.name
+												}
+												homeTeamLogo={
+													JSON.parse(savedDataUcl).uclLastFixture.response[0].teams
+														.home.logo
+												}
+												homeTeamGoals={
+													JSON.parse(savedDataUcl).uclLastFixture.response[0].goals
+														.home
+												}
+												awayTeamName={
+													JSON.parse(savedDataUcl).uclLastFixture.response[0].teams
+														.away.name
+												}
+												awayTeamLogo={
+													JSON.parse(savedDataUcl).uclLastFixture.response[0].teams
+														.away.logo
+												}
+												awayTeamGoals={
+													JSON.parse(savedDataUcl).uclLastFixture.response[0].goals
+														.away
+												}
+											/>
+											<Fixture
+												date={
+													JSON.parse(savedDataUcl).uclNextFixture.response[0].fixture
+														.date
+												}
+												homeTeamName={
+													JSON.parse(savedDataUcl).uclNextFixture.response[0].teams
+														.home.name
+												}
+												homeTeamLogo={
+													JSON.parse(savedDataUcl).uclNextFixture.response[0].teams
+														.home.logo
+												}
+												awayTeamName={
+													JSON.parse(savedDataUcl).uclNextFixture.response[0].teams
+														.away.name
+												}
+												awayTeamLogo={
+													JSON.parse(savedDataUcl).uclNextFixture.response[0].teams
+														.away.logo
+												}
+											/>
+										</div>
+									)
+								} */}
 							</div>
 						)}
 				</div>
 			</div>
 
 			<div className="content-block content-block-standings-table">
-				<StandingsTable
-					data={
-						activeButton === 'pl'
-							? JSON.parse(savedData)?.eplStandings?.response[0]?.league
-									.standings[0]
-							: JSON.parse(savedDataUcl)?.uclStandings?.response[0]?.league
-									?.standings?.[1]
-					}
-				/>
+				<StandingsTable data={JSON.parse(savedData)?.eplStandings?.response[0]?.league.standings[0]} />
 			</div>
 		</div>
 	);

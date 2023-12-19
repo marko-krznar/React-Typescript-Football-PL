@@ -1,12 +1,13 @@
 .premier-league-app {
-	max-height: 100vh;
-	overflow: hidden;
 	display: flex;
-
+	justify-content: center;
+	
 	.container {
 		display: flex;
 		gap: 2rem;
-		padding: 2rem;
+		padding: 4rem;
+		max-width: 1460px;
+		box-sizing: border-box;
 	}
 
 	.content-block {
@@ -25,7 +26,6 @@
 
 	.content-block-standings-table {
 		width: calc(40% - 1rem);
-		height: calc(100vh - 4rem);
 		overflow: auto;
 		position: relative;
 	}
@@ -69,12 +69,12 @@
 		}
 	}
 
-	.section-two-col {
+	.fixtures-wrapper {
 		display: flex;
 		gap: 2rem;
 
-		.content-block-fixtures {
-			flex-basis: 50%;
+		> * {
+			width: 50%;
 		}
 	}
 }
@@ -120,11 +120,6 @@
 			justify-content: left;
 			white-space: nowrap;
 			overflow-x: scroll;
-		}
-
-		.section-two-col {
-			flex-direction: column;
-			gap: 1rem;
 		}
 	}
 }
