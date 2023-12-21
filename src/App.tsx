@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import classNames from 'classnames';
 
 import StandingsTable from './components/StandingsTable';
 import Fixture from './components/Fixture';
@@ -13,6 +14,8 @@ function App() {
 	const [standingsUcl, setStandingsUcl] = useState<any>(null);
 	const [lastFixtureUcl, setLastFixtureUcl] = useState<any>(null);
 	const [nextFixtureUcl, setNextFixtureUcl] = useState<any>(null);
+	// State for active button
+	const [activeButton, setActiveButton] = useState<string>('arsenal');
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -120,14 +123,26 @@ function App() {
 		);
 	}
 
+	const getButtonClassnames = (buttonName: string) => {
+		return classNames('button', {
+			'button-active': activeButton === buttonName,
+		});
+	};
+
 	return (
 		<div className="container">
 			<div className="section-grid">
 				<div className="content-block-intro">
 					<h1 className="heading">Football Results</h1>
 					<p className="text">
-						Stay updated with the latest match results, upcoming games and position in Premier League. This app has been meticulously crafted as a learning project to enhance my skills and knowledge in app development and data presentation.
+						Stay updated with the latest match results, upcoming games and position. This app has been meticulously crafted as a learning project to enhance my skills and knowledge in app development and data presentation.
 					</p>
+					<div className="choose-team-wrapper">
+						<p className='text'>Show fixtures and standings for:</p>
+						<button className={getButtonClassnames('arsenal')} onClick={() => setActiveButton('arsenal')}>Arsenal</button>
+						{/* TODO enable Dinamo button when APIs will get that data */}
+						{/* <button>Dinamo</button> */}
+					</div>
 				</div>
 				<div className="section-two-col">
 					{JSON.parse(savedData)?.eplLastFixture?.response[0]?.fixture.date &&
@@ -140,7 +155,7 @@ function App() {
 										<div className="previous-fixtures">
 											{/* TODO make fixture-gameweek component */}
 											<span className="fixture-gameweek">
-												Gameweek 10
+												Previous fixture
 											</span>
 											<Fixture
 												date={
@@ -175,7 +190,7 @@ function App() {
 										</div>
 										<div className="future-fixtures">
 											<span className="fixture-gameweek">
-												Gameweek 11
+												Next fixture
 											</span>
 											<Fixture
 												date={

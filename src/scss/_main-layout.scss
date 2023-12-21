@@ -13,7 +13,7 @@
 	.content-block {
 		background: $light-background;
 		border-radius: 1rem;
-		padding: 4rem;
+		padding: 2.5rem;
 		box-sizing: border-box;
 	}
 
@@ -26,8 +26,6 @@
 
 	.content-block-standings-table {
 		width: calc(40% - 1rem);
-		overflow: auto;
-		position: relative;
 	}
 
 	.content-block-fixtures {
@@ -77,26 +75,23 @@
 			width: 50%;
 		}
 	}
+
+	.choose-team-wrapper {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
 }
 
-@media (max-width: 1439px) {
+@media (max-width: 1279px) {
 	.premier-league-app {
-		max-height: unset;
-		overflow: unset;
-		flex-direction: column;
-
 		.container {
 			flex-direction: column;
+			max-width: 100%;
 		}
 
-		.section-grid,
-		.content-block-standings-table {
-			width: 100%;
-		}
-
-		.content-block-standings-table {
-			display: flex;
-			justify-content: center;
+		.section-grid, .content-block-standings-table {
+			width: auto;
 		}
 	}
 }
@@ -116,10 +111,12 @@
 			padding: 2rem;
 		}
 
+		.fixtures-wrapper {
+			flex-direction: column;
+		}
+
 		.content-block-standings-table {
-			justify-content: left;
-			white-space: nowrap;
-			overflow-x: scroll;
+			overflow: auto;
 		}
 	}
 }
