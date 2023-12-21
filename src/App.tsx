@@ -36,40 +36,30 @@ function App() {
 					nextFixtureUclResponse,
 				] = await Promise.all([
 					// Make the first API call for standings
-					axios.get(
-						'https://v3.football.api-sports.io/standings?league=39&season=2023',
-						{ headers }
-					),
+					axios.get('https://v3.football.api-sports.io/standings?league=39&season=2023', { headers }),
 
 					// Make the second API call for the last fixture
-					axios.get(
-						'https://v3.football.api-sports.io/fixtures?league=39&season=2023&team=42&last=1',
-						{ headers }
-					),
+					axios.get('https://v3.football.api-sports.io/fixtures?league=39&season=2023&team=42&last=1', {
+						headers,
+					}),
 
 					// Make the third API call for the next fixture
-					axios.get(
-						'https://v3.football.api-sports.io/fixtures?league=39&season=2023&team=42&next=1',
-						{ headers }
-					),
+					axios.get('https://v3.football.api-sports.io/fixtures?league=39&season=2023&team=42&next=1', {
+						headers,
+					}),
 
 					// Make the fourth API call for UCL standings
-					axios.get(
-						'https://v3.football.api-sports.io/standings?league=2&season=2023',
-						{ headers }
-					),
+					axios.get('https://v3.football.api-sports.io/standings?league=2&season=2023', { headers }),
 
 					// Make the fifth API call for the last UCL fixture
-					axios.get(
-						'https://v3.football.api-sports.io/fixtures?league=2&season=2023&team=42&last=1',
-						{ headers }
-					),
+					axios.get('https://v3.football.api-sports.io/fixtures?league=2&season=2023&team=42&last=1', {
+						headers,
+					}),
 
 					// Make the sixth API call for the next UCL fixture
-					axios.get(
-						'https://v3.football.api-sports.io/fixtures?league=2&season=2023&team=42&next=1',
-						{ headers }
-					),
+					axios.get('https://v3.football.api-sports.io/fixtures?league=2&season=2023&team=42&next=1', {
+						headers,
+					}),
 				]);
 
 				// Set the state with the data received from API responses
@@ -91,35 +81,27 @@ function App() {
 		// Optionally, add cleanup code if needed
 	}, []);
 
-	if (
-		standings?.results > 0 &&
-		lastFixture?.results > 0 &&
-		nextFixture?.results > 0
-	) {
+	if (standings?.results > 0 && lastFixture?.results > 0 && nextFixture?.results > 0) {
 		localStorage.setItem(
 			'eplData',
 			JSON.stringify({
 				eplStandings: standings,
 				eplLastFixture: lastFixture,
 				eplNextFixture: nextFixture,
-			})
+			}),
 		);
 	}
 
 	const savedData: any = localStorage.getItem('eplData');
 
-	if (
-		standingsUcl?.results > 0 &&
-		lastFixtureUcl?.results > 0 &&
-		nextFixtureUcl?.results > 0
-	) {
+	if (standingsUcl?.results > 0 && lastFixtureUcl?.results > 0 && nextFixtureUcl?.results > 0) {
 		localStorage.setItem(
 			'uclData',
 			JSON.stringify({
 				uclStandings: standingsUcl,
 				uclLastFixture: lastFixtureUcl,
 				uclNextFixture: nextFixtureUcl,
-			})
+			}),
 		);
 	}
 
@@ -135,83 +117,66 @@ function App() {
 				<div className="content-block-intro">
 					<h1 className="heading">Football Results</h1>
 					<p className="text">
-						Stay updated with the latest match results, upcoming games and position. This app has been meticulously crafted as a learning project to enhance my skills and knowledge in app development and data presentation.
+						Stay updated with the latest match results, upcoming games and position. This app has been
+						meticulously crafted as a learning project to enhance my skills and knowledge in app development
+						and data presentation.
 					</p>
 					<div className="choose-team-wrapper">
-						<p className='text'>Show fixtures and standings for:</p>
-						<button className={getButtonClassnames('arsenal')} onClick={() => setActiveButton('arsenal')}>Arsenal</button>
+						<p className="text">Show fixtures and standings for:</p>
+						<button className={getButtonClassnames('arsenal')} onClick={() => setActiveButton('arsenal')}>
+							Arsenal
+						</button>
 						{/* TODO enable Dinamo button when APIs will get that data */}
 						{/* <button>Dinamo</button> */}
 					</div>
 				</div>
 				<div className="section-two-col">
 					{JSON.parse(savedData)?.eplLastFixture?.response[0]?.fixture.date &&
-						JSON.parse(savedData)?.eplNextFixture?.response[0]?.fixture
-							.date && (
+						JSON.parse(savedData)?.eplNextFixture?.response[0]?.fixture.date && (
 							<div className="content-block">
 								<div className="content-block-fixtures">
 									<h2 className="heading">Premier League</h2>
 									<div className="fixtures-wrapper">
 										<div className="previous-fixtures">
 											{/* TODO make fixture-gameweek component */}
-											<span className="fixture-gameweek">
-												Previous fixture
-											</span>
+											<span className="fixture-gameweek">Previous fixture</span>
 											<Fixture
-												date={
-													JSON.parse(savedData)?.eplLastFixture?.response[0].fixture
-														.date
-												}
+												date={JSON.parse(savedData)?.eplLastFixture?.response[0].fixture.date}
 												homeTeamName={
-													JSON.parse(savedData)?.eplLastFixture?.response[0].teams
-														.home.name
+													JSON.parse(savedData)?.eplLastFixture?.response[0].teams.home.name
 												}
 												homeTeamLogo={
-													JSON.parse(savedData)?.eplLastFixture?.response[0].teams
-														.home.logo
+													JSON.parse(savedData)?.eplLastFixture?.response[0].teams.home.logo
 												}
 												homeTeamGoals={
-													JSON.parse(savedData)?.eplLastFixture?.response[0].goals
-														.home
+													JSON.parse(savedData)?.eplLastFixture?.response[0].goals.home
 												}
 												awayTeamName={
-													JSON.parse(savedData)?.eplLastFixture?.response[0].teams
-														.away.name
+													JSON.parse(savedData)?.eplLastFixture?.response[0].teams.away.name
 												}
 												awayTeamLogo={
-													JSON.parse(savedData)?.eplLastFixture?.response[0].teams
-														.away.logo
+													JSON.parse(savedData)?.eplLastFixture?.response[0].teams.away.logo
 												}
 												awayTeamGoals={
-													JSON.parse(savedData)?.eplLastFixture?.response[0].goals
-														.away
+													JSON.parse(savedData)?.eplLastFixture?.response[0].goals.away
 												}
 											/>
 										</div>
 										<div className="future-fixtures">
-											<span className="fixture-gameweek">
-												Next fixture
-											</span>
+											<span className="fixture-gameweek">Next fixture</span>
 											<Fixture
-												date={
-													JSON.parse(savedData)?.eplNextFixture?.response[0].fixture
-														.date
-												}
+												date={JSON.parse(savedData)?.eplNextFixture?.response[0].fixture.date}
 												homeTeamName={
-													JSON.parse(savedData)?.eplNextFixture?.response[0].teams
-														.home.name
+													JSON.parse(savedData)?.eplNextFixture?.response[0].teams.home.name
 												}
 												homeTeamLogo={
-													JSON.parse(savedData)?.eplNextFixture?.response[0].teams
-														.home.logo
+													JSON.parse(savedData)?.eplNextFixture?.response[0].teams.home.logo
 												}
 												awayTeamName={
-													JSON.parse(savedData)?.eplNextFixture?.response[0].teams
-														.away.name
+													JSON.parse(savedData)?.eplNextFixture?.response[0].teams.away.name
 												}
 												awayTeamLogo={
-													JSON.parse(savedData)?.eplNextFixture?.response[0].teams
-														.away.logo
+													JSON.parse(savedData)?.eplNextFixture?.response[0].teams.away.logo
 												}
 											/>
 										</div>

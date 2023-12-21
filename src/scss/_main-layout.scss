@@ -1,7 +1,7 @@
 .premier-league-app {
 	display: flex;
 	justify-content: center;
-	
+
 	.container {
 		display: flex;
 		gap: 2rem;
@@ -90,7 +90,8 @@
 			max-width: 100%;
 		}
 
-		.section-grid, .content-block-standings-table {
+		.section-grid,
+		.content-block-standings-table {
 			width: auto;
 		}
 	}
