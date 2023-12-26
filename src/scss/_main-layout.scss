@@ -26,6 +26,7 @@
 
 	.content-block-standings-table {
 		width: calc(40% - 1rem);
+		align-self: flex-start;
 	}
 
 	.content-block-fixtures {
@@ -80,6 +81,22 @@
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+	}
+
+	.fixtures-collapsable-wrapper {
+		padding-top: 1rem;
+
+		.fixtures-list {
+			padding-top: 1rem;
+
+			.fixture:not(:first-child) {
+				padding-top: 1rem;
+			}
+
+			&.collapsed {
+				display: none;
+			}
+		}
 	}
 }
 
