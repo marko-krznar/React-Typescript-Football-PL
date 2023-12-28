@@ -30,8 +30,7 @@
 	}
 
 	.content-block-fixtures {
-		display: flex;
-		flex-direction: column;
+		display: grid;
 		gap: 1.5rem;
 
 		.fixture-row {
@@ -69,12 +68,9 @@
 	}
 
 	.fixtures-wrapper {
-		display: flex;
+		display: grid;
 		gap: 2rem;
-
-		> * {
-			width: 50%;
-		}
+		grid-template-columns: repeat(2, 1fr);
 	}
 
 	.choose-team-wrapper {
@@ -83,19 +79,9 @@
 		gap: 1rem;
 	}
 
-	.fixtures-collapsable-wrapper {
-		padding-top: 1rem;
-
-		.fixtures-list {
-			padding-top: 1rem;
-
-			.fixture:not(:first-child) {
-				padding-top: 1rem;
-			}
-
-			&.collapsed {
-				display: none;
-			}
+	.fixtures-collapsable-wrapper .fixtures-list {
+		.fixture:not(:first-child) {
+			padding-top: 1.5rem;
 		}
 	}
 }
@@ -130,10 +116,11 @@
 		}
 
 		.fixtures-wrapper {
-			flex-direction: column;
+			grid-template-columns: 1fr;
 		}
 
 		.content-block-standings-table {
+			width: 100%;
 			overflow: auto;
 		}
 	}
