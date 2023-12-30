@@ -35,8 +35,13 @@
 			position: relative;
 			text-align: center;
 		}
+
 		.champions-league span {
 			background: $blue-dark;
+		}
+
+		.europa-league span {
+			background: $red-dark-1;
 		}
 
 		.relegation-championship span {

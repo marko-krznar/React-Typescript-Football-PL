@@ -37,6 +37,7 @@ function StandingsTable(standings: StandingsProp) {
 
 						const getTdClassnames = classNames('team-rank', {
 							'champions-league': description === 'Promotion - Champions League (Group Stage: )',
+							'europa-league': description === 'Promotion - Europa League (Group Stage: )',
 							'relegation-championship': description === 'Relegation - Championship',
 						});
 
