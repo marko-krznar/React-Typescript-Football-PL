@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
+import './scss/style.scss';
+
 import axios from 'axios';
 import classNames from 'classnames';
 
 import StandingsTable from './components/StandingsTable';
 import Fixture from './components/Fixture';
 import FixtureGameweekNumber from './components/FixtureGameweekNumber';
-
-import './scss/style.scss';
 
 function App() {
 	const [standingsPremierLeague, setStandingsPremierLeague] = useState<any>(null);
@@ -280,7 +280,6 @@ function App() {
 					</div>
 				</div>
 			</div>
-
 			<div className="content-block content-block-standings-table">
 				<StandingsTable
 					data={JSON.parse(getPremierLeagueData)?.eplStandings?.response[0]?.league.standings[0]}
