@@ -24,7 +24,9 @@ function StandingsTable(standings: StandingsProp) {
 		<table>
 			<tbody>
 				<tr>
-					<th>#</th>
+					<th className="team-rank">
+						<span>#</span>
+					</th>
 					<th>Team</th>
 					<th>GP</th>
 					<th>PO</th>
@@ -33,14 +35,15 @@ function StandingsTable(standings: StandingsProp) {
 					data.map((teamItem: TeamProp) => {
 						const { description, rank, team, points, all } = teamItem;
 
-						const getTdClassnames = classNames({
+						const getTdClassnames = classNames('team-rank', {
 							'champions-league': description === 'Promotion - Champions League (Group Stage: )',
+							'relegation-championship': description === 'Relegation - Championship',
 						});
 
 						return (
 							<tr key={team?.id} className={team?.name === 'Arsenal' ? 'row-arsenal' : ''}>
 								<td className={getTdClassnames}>
-									<span>{rank}</span>
+									<span title={description}>{rank}</span>
 								</td>
 								<td>{team?.name}</td>
 								<td>{all?.played}</td>
