@@ -14,7 +14,7 @@ function App() {
 	const [lastPremierLeagueFixtures, setLastPremierLeagueFixtures] = useState<any>(null);
 	const [nextPremierLeagueFixtures, setNextPremierLeagueFixtures] = useState<any>(null);
 	const [activeButton, setActiveButton] = useState<string>('arsenal');
-	const [collapsible, setCollapsible] = useState<boolean>(true);
+	const [collapsible, setCollapsible] = useState<boolean>(false);
 
 	const currentSeason = new Date().getFullYear();
 

@@ -27,6 +27,16 @@
 	.content-block-standings-table {
 		width: calc(40% - 1rem);
 		align-self: flex-start;
+
+		.champions-league span {
+			background: $blue-dark;
+			display: inline-block;
+			width: 100%;
+			border-radius: 2px;
+			position: relative;
+			right: 0.6875rem;
+			text-align: center;
+		}
 	}
 
 	.content-block-fixtures {
