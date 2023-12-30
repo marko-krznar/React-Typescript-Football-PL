@@ -21,20 +21,17 @@ function StandingsTable(standings: StandingsProp) {
 		<table>
 			<tbody>
 				<tr>
-					<th>Position</th>
-					<th>Name</th>
+					<th>#</th>
+					<th>Team</th>
 					<th>GP</th>
-					<th>Points</th>
+					<th>PO</th>
 				</tr>
 				{data &&
 					data.map((teamItem: TeamProp) => {
 						const { rank, team, points, all } = teamItem;
 
 						return (
-							<tr
-								key={team?.id}
-								className={team?.name === 'Arsenal' ? 'row-arsenal' : ''}
-							>
+							<tr key={team?.id} className={team?.name === 'Arsenal' ? 'row-arsenal' : ''}>
 								<td>{rank}</td>
 								<td>{team?.name}</td>
 								<td>{all?.played}</td>

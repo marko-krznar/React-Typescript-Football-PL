@@ -1,6 +1,12 @@
 table {
 	position: relative;
 	z-index: 20;
+	border-collapse: collapse;
+	width: 100%;
+
+	tbody tr {
+		border-bottom: 1px solid $gray-dark;
+	}
 
 	tr {
 		&.row-arsenal td {
@@ -10,12 +16,6 @@ table {
 		&:first-child {
 			th {
 				padding-top: 0;
-			}
-		}
-
-		&:last-child {
-			td {
-				padding-bottom: 0;
 			}
 		}
 	}
@@ -31,13 +31,13 @@ th {
 	color: $headline-color;
 }
 
-th:first-child,
-td:first-child {
-	padding: 0.5rem 1rem 0.5rem 0;
-}
+// th:first-child,
+// td:first-child {
+// 	padding: 0.5rem 1rem 0.5rem 0;
+// }
 
 th:last-child,
 td:last-child {
-	padding: 0.5rem 0 0.5rem 1rem;
+	// padding: 0.5rem 0 0.5rem 1rem;
 	text-align: right;
 }
