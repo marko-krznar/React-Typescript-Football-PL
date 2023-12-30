@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import StandingsTable from './components/StandingsTable';
 import Fixture from './components/Fixture';
+import FixtureGameweekNumber from './components/FixtureGameweekNumber';
+
 import './scss/style.scss';
 
 function App() {
@@ -58,7 +60,7 @@ function App() {
 						},
 					),
 
-					// // Make the fourth API call for the next fixtures
+					// Make the fourth API call for the next fixtures
 					axios.get(
 						`https://v3.football.api-sports.io/fixtures?season=2023&league=39&round=${roundPremierLeague.response[0]}`,
 						{ headers },
@@ -80,7 +82,7 @@ function App() {
 		void fetchData();
 
 		// Optionally, add cleanup code if needed
-	}, []);
+	}, [currentSeason, roundPremierLeague?.response]);
 
 	if (
 		standingsPremierLeague?.results > 0 &&
@@ -163,7 +165,9 @@ function App() {
 							<h2 className="heading">Premier League</h2>
 							<div className="fixtures-wrapper">
 								<div className="previous-fixtures">
-									<span className="fixture-gameweek">Previous fixture</span>
+									<FixtureGameweekNumber
+										roundResponse={JSON.parse(getPremierLeagueData).eplCurrentRound.response[0]}
+									/>
 									{arsenalPreviousFixture && (
 										<Fixture
 											date={arsenalPreviousFixture.fixture.date}
@@ -183,7 +187,10 @@ function App() {
 									)}
 								</div>
 								<div className="future-fixtures">
-									<span className="fixture-gameweek">Next fixture</span>
+									<FixtureGameweekNumber
+										roundResponse={JSON.parse(getPremierLeagueData).eplCurrentRound.response[0]}
+										nextRoundResponse
+									/>
 									{arsenalFutureFixture && (
 										<Fixture
 											date={arsenalFutureFixture.fixture.date}
@@ -209,7 +216,9 @@ function App() {
 							{collapsible && (
 								<div className="fixtures-wrapper">
 									<div className="previous-fixtures">
-										<span className="fixture-gameweek">Previous fixture</span>
+										<FixtureGameweekNumber
+											roundResponse={JSON.parse(getPremierLeagueData).eplCurrentRound.response[0]}
+										/>
 										<div className="fixtures-collapsable-wrapper">
 											<div className="fixtures-list">
 												{nonArsenalPreviousFixtures.map((fixture: any, index: number) => {
@@ -236,7 +245,10 @@ function App() {
 										</div>
 									</div>
 									<div className="future-fixtures">
-										<span className="fixture-gameweek">Next fixture</span>
+										<FixtureGameweekNumber
+											roundResponse={JSON.parse(getPremierLeagueData).eplCurrentRound.response[0]}
+											nextRoundResponse
+										/>
 										<div className="fixtures-collapsable-wrapper">
 											<div className="fixtures-list">
 												{nonArsenalFutureFixtures.map((fixture: any, index: number) => {
