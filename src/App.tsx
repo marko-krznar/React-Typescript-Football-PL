@@ -16,13 +16,8 @@ function App() {
 	const [activeButton, setActiveButton] = useState<string>('arsenal');
 	const [collapsible, setCollapsible] = useState<boolean>(false);
 
-	const currentSeason = new Date().getFullYear();
-
-	const getLastRoundNumber = (currentRound: any) => {
-		const currentRoundSplit = currentRound.split(' ');
-
-		return currentRoundSplit.slice(-1) - 1;
-	};
+	// TODO check if api gets data for 2024
+	// const currentSeason = new Date().getFullYear();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -41,7 +36,7 @@ function App() {
 					nextPremierLeagueFixturesResponse,
 				] = await Promise.all([
 					// Make the first API call for standings
-					axios.get(`https://v3.football.api-sports.io/standings?league=39&season=${currentSeason}`, {
+					axios.get(`https://v3.football.api-sports.io/standings?season=2023&league=39`, {
 						headers,
 					}),
 
@@ -52,9 +47,7 @@ function App() {
 
 					// Make the third API call for the last fixtures
 					axios.get(
-						`https://v3.football.api-sports.io/fixtures?season=2023&league=39&round=${getLastRoundNumber(
-							JSON.parse(getPremierLeagueData)?.eplCurrentRound.response[0],
-						)}`,
+						`https://v3.football.api-sports.io/fixtures?season=2023&league=39&round=Regular Season - 21`,
 						{
 							headers,
 						},
@@ -62,10 +55,15 @@ function App() {
 
 					// Make the fourth API call for the next fixtures
 					axios.get(
-						`https://v3.football.api-sports.io/fixtures?season=2023&league=39&round=${roundPremierLeague.response[0]}`,
+						`https://v3.football.api-sports.io/fixtures?season=2023&league=39&round=${roundPremierLeague?.response[0]}`,
 						{ headers },
 					),
 				]);
+
+				// console.log('standingsPremierLeagueResponse', standingsPremierLeagueResponse.data);
+				// console.log('roundPremierLeagueResponse', roundPremierLeagueResponse.data);
+				// console.log('lastPremierLeagueFixturesResponse', lastPremierLeagueFixturesResponse.data);
+				// console.log('nextPremierLeagueFixturesResponse', nextPremierLeagueFixturesResponse.data);
 
 				// Set the state with the data received from API responses
 				setStandingsPremierLeague(standingsPremierLeagueResponse.data);
@@ -79,10 +77,10 @@ function App() {
 		};
 
 		// Call the fetchData function when the component mounts
-		void fetchData();
+		fetchData();
 
 		// Optionally, add cleanup code if needed
-	}, [currentSeason, roundPremierLeague?.response]);
+	}, []);
 
 	if (
 		standingsPremierLeague?.results > 0 &&
@@ -103,6 +101,12 @@ function App() {
 
 	const getPremierLeagueData: any = localStorage.getItem('premierLeagueData');
 
+	// const getLastRoundNumber = (currentRound: any) => {
+	// 	const currentRoundSplit = currentRound.split(' ');
+
+	// 	return currentRoundSplit.slice(-1) - 1;
+	// };
+
 	const getButtonClassnames = (buttonName: string) => {
 		return classNames('button', {
 			'button-active': activeButton === buttonName,
@@ -110,12 +114,12 @@ function App() {
 	};
 
 	const findArsenalFixture = (arsenalFixtures: Array<any>) =>
-		arsenalFixtures.find((arsenalFixture) => {
+		arsenalFixtures?.find((arsenalFixture) => {
 			return arsenalFixture.teams.away.name === 'Arsenal' || arsenalFixture.teams.home.name === 'Arsenal';
 		});
 
 	const filterNonArsenalFixtures = (arsenalNoneFixtures: Array<any>) =>
-		arsenalNoneFixtures.filter((arsenalNoneFixture) => {
+		arsenalNoneFixtures?.filter((arsenalNoneFixture) => {
 			if (arsenalNoneFixture.teams.away.name === 'Arsenal' || arsenalNoneFixture.teams.home.name === 'Arsenal') {
 				return;
 			}
@@ -123,14 +127,14 @@ function App() {
 			return arsenalNoneFixture;
 		});
 
-	const arsenalPreviousFixture = findArsenalFixture(JSON.parse(getPremierLeagueData).eplLastFixtures.response);
-	const arsenalFutureFixture = findArsenalFixture(JSON.parse(getPremierLeagueData).eplNextFixtures.response);
+	const arsenalPreviousFixture = findArsenalFixture(JSON.parse(getPremierLeagueData)?.eplLastFixtures?.response);
+	const arsenalFutureFixture = findArsenalFixture(JSON.parse(getPremierLeagueData)?.eplNextFixtures?.response);
 
 	const nonArsenalPreviousFixtures = filterNonArsenalFixtures(
-		JSON.parse(getPremierLeagueData).eplLastFixtures.response,
+		JSON.parse(getPremierLeagueData)?.eplLastFixtures?.response,
 	);
 	const nonArsenalFutureFixtures = filterNonArsenalFixtures(
-		JSON.parse(getPremierLeagueData).eplNextFixtures.response,
+		JSON.parse(getPremierLeagueData)?.eplNextFixtures?.response,
 	);
 
 	// todo remove when different gameweeks will be in local storage
@@ -166,7 +170,7 @@ function App() {
 							<div className="fixtures-wrapper">
 								<div className="previous-fixtures">
 									<FixtureGameweekNumber
-										roundResponse={JSON.parse(getPremierLeagueData).eplCurrentRound.response[0]}
+										roundResponse={JSON.parse(getPremierLeagueData)?.eplCurrentRound?.response[0]}
 									/>
 									{arsenalPreviousFixture && (
 										<Fixture
@@ -188,7 +192,7 @@ function App() {
 								</div>
 								<div className="future-fixtures">
 									<FixtureGameweekNumber
-										roundResponse={JSON.parse(getPremierLeagueData).eplCurrentRound.response[0]}
+										roundResponse={JSON.parse(getPremierLeagueData)?.eplCurrentRound?.response[0]}
 										nextRoundResponse
 									/>
 									{arsenalFutureFixture && (
@@ -217,11 +221,13 @@ function App() {
 								<div className="fixtures-wrapper">
 									<div className="previous-fixtures">
 										<FixtureGameweekNumber
-											roundResponse={JSON.parse(getPremierLeagueData).eplCurrentRound.response[0]}
+											roundResponse={
+												JSON.parse(getPremierLeagueData)?.eplCurrentRound?.response[0]
+											}
 										/>
 										<div className="fixtures-collapsable-wrapper">
 											<div className="fixtures-list">
-												{nonArsenalPreviousFixtures.map((fixture: any, index: number) => {
+												{nonArsenalPreviousFixtures?.map((fixture: any, index: number) => {
 													return (
 														<Fixture
 															key={index}
@@ -246,12 +252,14 @@ function App() {
 									</div>
 									<div className="future-fixtures">
 										<FixtureGameweekNumber
-											roundResponse={JSON.parse(getPremierLeagueData).eplCurrentRound.response[0]}
+											roundResponse={
+												JSON.parse(getPremierLeagueData)?.eplCurrentRound?.response[0]
+											}
 											nextRoundResponse
 										/>
 										<div className="fixtures-collapsable-wrapper">
 											<div className="fixtures-list">
-												{nonArsenalFutureFixtures.map((fixture: any, index: number) => {
+												{nonArsenalFutureFixtures?.map((fixture: any, index: number) => {
 													return (
 														<Fixture
 															key={index}
