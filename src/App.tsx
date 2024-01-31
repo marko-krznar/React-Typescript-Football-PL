@@ -28,42 +28,42 @@ function App() {
 			};
 
 			try {
-				// Use Promise.all to make multiple API calls concurrently
-				const [
-					standingsPremierLeagueResponse,
-					roundPremierLeagueResponse,
-					lastPremierLeagueFixturesResponse,
-					nextPremierLeagueFixturesResponse,
-				] = await Promise.all([
-					// Make the first API call for standings
-					axios.get(`https://v3.football.api-sports.io/standings?season=2023&league=39`, {
+				// Make the first API call for standings
+				const standingsPremierLeagueResponse = await axios.get(
+					`https://v3.football.api-sports.io/standings?season=2023&league=39`,
+					{
 						headers,
-					}),
+					},
+				);
 
-					// Make the second API call for the current round
-					axios.get('https://v3.football.api-sports.io/fixtures/rounds?season=2023&league=39&current=true', {
+				// Make the second API call for the current round
+				const roundPremierLeagueResponse = await axios.get(
+					'https://v3.football.api-sports.io/fixtures/rounds?season=2023&league=39&current=true',
+					{
 						headers,
-					}),
+					},
+				);
 
-					// Make the third API call for the last fixtures
-					axios.get(
-						`https://v3.football.api-sports.io/fixtures?season=2023&league=39&round=Regular Season - 21`,
-						{
-							headers,
-						},
-					),
+				// Save current round
+				const currentRound = roundPremierLeagueResponse.data.response[0];
 
-					// Make the fourth API call for the next fixtures
-					axios.get(
-						`https://v3.football.api-sports.io/fixtures?season=2023&league=39&round=${roundPremierLeague?.response[0]}`,
-						{ headers },
-					),
-				]);
+				// Make the third API call for the last fixtures
+				const lastPremierLeagueFixturesResponse = await axios.get(
+					`https://v3.football.api-sports.io/fixtures?season=2023&league=39&round=${currentRound}`,
+					{
+						headers,
+					},
+				);
 
-				// console.log('standingsPremierLeagueResponse', standingsPremierLeagueResponse.data);
-				// console.log('roundPremierLeagueResponse', roundPremierLeagueResponse.data);
-				// console.log('lastPremierLeagueFixturesResponse', lastPremierLeagueFixturesResponse.data);
-				// console.log('nextPremierLeagueFixturesResponse', nextPremierLeagueFixturesResponse.data);
+				// Get round number and for future fixtures
+				const currentRoundArray = currentRound.split(' ');
+				const lastRoundNumber = Number(currentRoundArray.slice(-1)) + 1;
+
+				// Make the fourth API call for the next fixtures
+				const nextPremierLeagueFixturesResponse = await axios.get(
+					`https://v3.football.api-sports.io/fixtures?season=2023&league=39&round=Regular Season - ${lastRoundNumber}`,
+					{ headers },
+				);
 
 				// Set the state with the data received from API responses
 				setStandingsPremierLeague(standingsPremierLeagueResponse.data);
