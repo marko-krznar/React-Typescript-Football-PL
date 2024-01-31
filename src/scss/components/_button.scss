@@ -7,8 +7,8 @@ button.button {
 
 	&.button-active {
 		background: transparent;
-		border-color: transparent;
-		color: $headline-color;
+		border-color: $green-mid;
+		color: $green-mid;
 	}
 
 	&:hover {

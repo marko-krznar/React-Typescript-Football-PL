@@ -1,4 +1,7 @@
+import classNames from 'classnames';
+
 export interface TeamProp {
+	description?: string;
 	rank?: string;
 	points?: string;
 	team?: {
@@ -21,21 +24,28 @@ function StandingsTable(standings: StandingsProp) {
 		<table>
 			<tbody>
 				<tr>
-					<th>Position</th>
-					<th>Name</th>
+					<th className="team-rank">
+						<span>#</span>
+					</th>
+					<th>Team</th>
 					<th>GP</th>
-					<th>Points</th>
+					<th>PO</th>
 				</tr>
 				{data &&
 					data.map((teamItem: TeamProp) => {
-						const { rank, team, points, all } = teamItem;
+						const { description, rank, team, points, all } = teamItem;
+
+						const getTdClassnames = classNames('team-rank', {
+							'champions-league': description === 'Promotion - Champions League (Group Stage: )',
+							'europa-league': description === 'Promotion - Europa League (Group Stage: )',
+							'relegation-championship': description === 'Relegation - Championship',
+						});
 
 						return (
-							<tr
-								key={team?.id}
-								className={team?.name === 'Arsenal' ? 'row-arsenal' : ''}
-							>
-								<td>{rank}</td>
+							<tr key={team?.id} className={team?.name === 'Arsenal' ? 'row-arsenal' : ''}>
+								<td className={getTdClassnames}>
+									<span title={description}>{rank}</span>
+								</td>
 								<td>{team?.name}</td>
 								<td>{all?.played}</td>
 								<td>{points}</td>
