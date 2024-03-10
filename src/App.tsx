@@ -8,16 +8,17 @@ import StandingsTable from './components/StandingsTable';
 import Fixture from './components/Fixture';
 import FixtureGameweekNumber from './components/FixtureGameweekNumber';
 
+interface standingsPremierLeagueProps {
+	[key: string]: any;
+}
+
 function App() {
-	const [standingsPremierLeague, setStandingsPremierLeague] = useState<any>(null);
+	const [standingsPremierLeague, setStandingsPremierLeague] = useState<standingsPremierLeagueProps | null>(null);
 	const [roundPremierLeague, setRoundPremierLeague] = useState<any>(null);
 	const [lastPremierLeagueFixtures, setLastPremierLeagueFixtures] = useState<any>(null);
 	const [nextPremierLeagueFixtures, setNextPremierLeagueFixtures] = useState<any>(null);
 	const [activeButton, setActiveButton] = useState<string>('arsenal');
 	const [collapsible, setCollapsible] = useState<boolean>(false);
-
-	// TODO check if api gets data for 2024
-	// const currentSeason = new Date().getFullYear();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -78,8 +79,6 @@ function App() {
 
 		// Call the fetchData function when the component mounts
 		fetchData();
-
-		// Optionally, add cleanup code if needed
 	}, []);
 
 	if (
@@ -100,12 +99,6 @@ function App() {
 	}
 
 	const getPremierLeagueData: any = localStorage.getItem('premierLeagueData');
-
-	// const getLastRoundNumber = (currentRound: any) => {
-	// 	const currentRoundSplit = currentRound.split(' ');
-
-	// 	return currentRoundSplit.slice(-1) - 1;
-	// };
 
 	const getButtonClassnames = (buttonName: string) => {
 		return classNames('button', {
@@ -136,13 +129,6 @@ function App() {
 	const nonArsenalFutureFixtures = filterNonArsenalFixtures(
 		JSON.parse(getPremierLeagueData)?.eplNextFixtures?.response,
 	);
-
-	// todo remove when different gameweeks will be in local storage
-	// console.log('standingsPremierLeague', standingsPremierLeague);
-	// console.log('roundPremierLeague', roundPremierLeague);
-	// console.log('lastPremierLeagueFixtures', lastPremierLeagueFixtures);
-	// console.log('nextPremierLeagueFixtures', nextPremierLeagueFixtures);
-	// console.log('getPremierLeagueData', JSON.parse(getPremierLeagueData));
 
 	return (
 		<div className="container">
