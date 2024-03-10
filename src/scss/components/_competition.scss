@@ -1,0 +1,18 @@
+.competition-participation-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	.competitions {
+		display: flex;
+		gap: 0.5rem;
+		background: #f7f7f7;
+		border-radius: 1rem;
+		padding: 0.5rem 1rem;
+		width: fit-content;
+	}
+
+	img {
+		height: 2rem;
+	}
+}
