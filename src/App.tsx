@@ -7,9 +7,21 @@ import classNames from 'classnames';
 import StandingsTable from './components/StandingsTable';
 import Fixture from './components/Fixture';
 import FixtureGameweekNumber from './components/FixtureGameweekNumber';
+import Competition from './components/Competition';
 
 interface standingsPremierLeagueProps {
 	[key: string]: any;
+}
+
+interface CompetitionMapProps {
+	id: number;
+	league: {
+		logo: string;
+		name: string;
+	};
+	seasons: {
+		current: boolean;
+	};
 }
 
 function App() {
@@ -17,6 +29,7 @@ function App() {
 	const [roundPremierLeague, setRoundPremierLeague] = useState<any>(null);
 	const [lastPremierLeagueFixtures, setLastPremierLeagueFixtures] = useState<any>(null);
 	const [nextPremierLeagueFixtures, setNextPremierLeagueFixtures] = useState<any>(null);
+	const [competitions, setCompetitions] = useState<any>(null);
 	const [activeButton, setActiveButton] = useState<string>('arsenal');
 	const [collapsible, setCollapsible] = useState<boolean>(false);
 
@@ -66,11 +79,17 @@ function App() {
 					{ headers },
 				);
 
+				// Make the API call competitions
+				const competitionsResponse = await axios.get(`https://v3.football.api-sports.io/leagues?team=42`, {
+					headers,
+				});
+
 				// Set the state with the data received from API responses
 				setStandingsPremierLeague(standingsPremierLeagueResponse.data);
 				setRoundPremierLeague(roundPremierLeagueResponse.data);
 				setLastPremierLeagueFixtures(lastPremierLeagueFixturesResponse.data);
 				setNextPremierLeagueFixtures(nextPremierLeagueFixturesResponse.data);
+				setCompetitions(competitionsResponse.data.response);
 			} catch (error) {
 				// Handle errors if any of the API calls fail
 				// console.error('Error:', error);
@@ -98,7 +117,13 @@ function App() {
 		);
 	}
 
+	if (competitions?.length > 0) {
+		localStorage.setItem('competitions', JSON.stringify({ competitions }));
+	}
+
 	const getPremierLeagueData: any = localStorage.getItem('premierLeagueData');
+	const getCompetitions: any = localStorage.getItem('competitions');
+	const parsedCompetitions: any = JSON.parse(getCompetitions);
 
 	const getButtonClassnames = (buttonName: string) => {
 		return classNames('button', {
@@ -148,6 +173,28 @@ function App() {
 						{/* TODO enable Dinamo button when APIs will get that data */}
 						{/* <button>Dinamo</button> */}
 					</div>
+					{parsedCompetitions.competitions.length > 0 && (
+						<div className="competition-participation-wrapper">
+							<h2 className="heading">Competitions Arsenal is participating</h2>
+							<div className="competitions">
+								{parsedCompetitions.competitions.map((competition: CompetitionMapProps) => {
+									if (
+										Array.isArray(competition.seasons) &&
+										competition.seasons.some((season) => season.current === true)
+									)
+										return (
+											<Competition
+												key={competition.id}
+												logo={competition.league.logo}
+												name={competition.league.name}
+											/>
+										);
+
+									return null;
+								})}
+							</div>
+						</div>
+					)}
 				</div>
 				<div className="section-two-col">
 					<div className="content-block">
