@@ -79,7 +79,7 @@ function App() {
 					{ headers },
 				);
 
-				// Make the API call  competitions
+				// Make the API call competitions
 				const competitionsResponse = await axios.get(`https://v3.football.api-sports.io/leagues?team=42`, {
 					headers,
 				});
@@ -124,7 +124,6 @@ function App() {
 	const getPremierLeagueData: any = localStorage.getItem('premierLeagueData');
 	const getCompetitions: any = localStorage.getItem('competitions');
 	const parsedCompetitions: any = JSON.parse(getCompetitions);
-	// console.log(parsedCompetitions);
 
 	const getButtonClassnames = (buttonName: string) => {
 		return classNames('button', {
