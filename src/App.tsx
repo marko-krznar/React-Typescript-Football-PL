@@ -25,6 +25,68 @@ interface CompetitionMapProps {
 	};
 }
 
+interface Fixture {
+	id: number;
+	referee: string | null;
+	timezone: string;
+	date: string;
+	timestamp: number;
+	periods: {
+		first: string | null;
+		second: string | null;
+	};
+	venue: {
+		id: number;
+		name: string;
+		city: string;
+	};
+	status: {
+		long: string;
+		short: string;
+		elapsed: number | null;
+	};
+}
+
+interface League {
+	id: number;
+	name: string;
+	country: string;
+	logo: string;
+	flag: string;
+	season: number;
+	round: string;
+}
+
+interface Team {
+	id: number;
+	name: string;
+	logo: string;
+	winner: boolean | null;
+}
+
+interface Goals {
+	home: number | null;
+	away: number | null;
+}
+
+interface Score {
+	halftime: Goals;
+	fulltime: Goals;
+	extratime: Goals;
+	penalty: Goals;
+}
+
+interface Match {
+	fixture: Fixture;
+	league: League;
+	teams: {
+		home: Team;
+		away: Team;
+	};
+	goals: Goals;
+	score: Score;
+}
+
 function App() {
 	const [standingsPremierLeague, setStandingsPremierLeague] = useState<standingsPremierLeagueProps | null>(null);
 	const [roundPremierLeague, setRoundPremierLeague] = useState<any>(null);
@@ -146,14 +208,22 @@ function App() {
 			return arsenalNoneFixture;
 		});
 
+	const sortFixturesByDate = (fixturesArray: Array<Match>) =>
+		fixturesArray.sort((a: Match, b: Match) => {
+			const dateA = new Date(a.fixture.date).valueOf();
+			const dateB = new Date(b.fixture.date).valueOf();
+
+			return dateA - dateB;
+		});
+
 	const arsenalPreviousFixture = findArsenalFixture(JSON.parse(getPremierLeagueData)?.eplLastFixtures?.response);
 	const arsenalFutureFixture = findArsenalFixture(JSON.parse(getPremierLeagueData)?.eplNextFixtures?.response);
 
-	const nonArsenalPreviousFixtures = filterNonArsenalFixtures(
-		JSON.parse(getPremierLeagueData)?.eplLastFixtures?.response,
+	const nonArsenalPreviousFixtures = sortFixturesByDate(
+		filterNonArsenalFixtures(JSON.parse(getPremierLeagueData)?.eplLastFixtures?.response),
 	);
-	const nonArsenalFutureFixtures = filterNonArsenalFixtures(
-		JSON.parse(getPremierLeagueData)?.eplNextFixtures?.response,
+	const nonArsenalFutureFixtures = sortFixturesByDate(
+		filterNonArsenalFixtures(JSON.parse(getPremierLeagueData)?.eplNextFixtures?.response),
 	);
 
 	return (
