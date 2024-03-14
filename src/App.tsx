@@ -16,6 +16,7 @@ interface standingsPremierLeagueProps {
 interface CompetitionMapProps {
 	id: number;
 	league: {
+		id: number;
 		logo: string;
 		name: string;
 	};
@@ -184,7 +185,7 @@ function App() {
 									)
 										return (
 											<Competition
-												key={competition.id}
+												key={competition.league.id}
 												logo={competition.league.logo}
 												name={competition.league.name}
 											/>
