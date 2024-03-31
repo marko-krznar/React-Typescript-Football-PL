@@ -11,7 +11,7 @@ button.button {
 		color: $green-mid;
 	}
 
-	&:hover {
+	&:hover:not(:disabled) {
 		cursor: pointer;
 	}
 }
