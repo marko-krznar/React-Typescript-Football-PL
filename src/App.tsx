@@ -238,7 +238,11 @@ function App() {
 					</p>
 					<div className="choose-team-wrapper">
 						<p className="text">Show fixtures and standings for:</p>
-						<button className={getButtonClassnames('arsenal')} onClick={() => setActiveButton('arsenal')}>
+						<button
+							disabled
+							className={getButtonClassnames('arsenal')}
+							onClick={() => setActiveButton('arsenal')}
+						>
 							Arsenal
 						</button>
 						{/* TODO enable Dinamo button when APIs will get that data */}
