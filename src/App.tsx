@@ -285,14 +285,14 @@ function App() {
 											date={arsenalPreviousFixture.fixture.date}
 											homeTeamName={arsenalPreviousFixture.teams.home.name}
 											homeTeamLogo={arsenalPreviousFixture.teams.home.logo}
-											homeTeamGoals={(arsenalPreviousFixture.goals.home === null
-												? 0
+											homeTeamGoals={(arsenalPreviousFixture.fixture.status.short === 'NS'
+												? '-'
 												: arsenalPreviousFixture.goals.home
 											).toString()}
 											awayTeamName={arsenalPreviousFixture.teams.away.name}
 											awayTeamLogo={arsenalPreviousFixture.teams.away.logo}
-											awayTeamGoals={(arsenalPreviousFixture.goals.away === null
-												? 0
+											awayTeamGoals={(arsenalPreviousFixture.fixture.status.short === 'NS'
+												? '-'
 												: arsenalPreviousFixture.goals.away
 											).toString()}
 										/>
@@ -308,14 +308,14 @@ function App() {
 											date={arsenalFutureFixture.fixture.date}
 											homeTeamName={arsenalFutureFixture.teams.home.name}
 											homeTeamLogo={arsenalFutureFixture.teams.home.logo}
-											homeTeamGoals={(arsenalFutureFixture.goals.home === null
-												? 0
+											homeTeamGoals={(arsenalFutureFixture.fixture.status.short === 'NS'
+												? '-'
 												: arsenalFutureFixture.goals.home
 											).toString()}
 											awayTeamName={arsenalFutureFixture.teams.away.name}
 											awayTeamLogo={arsenalFutureFixture.teams.away.logo}
-											awayTeamGoals={(arsenalFutureFixture.goals.away === null
-												? 0
+											awayTeamGoals={(arsenalFutureFixture.fixture.status.short === 'NS'
+												? '-'
 												: arsenalFutureFixture.goals.away
 											).toString()}
 										/>
@@ -342,14 +342,14 @@ function App() {
 															date={fixture.fixture.date}
 															homeTeamName={fixture.teams.home.name}
 															homeTeamLogo={fixture.teams.home.logo}
-															homeTeamGoals={(fixture.goals.home === null
-																? 0
+															homeTeamGoals={(fixture.fixture.status.short === 'NS'
+																? '-'
 																: fixture.goals.home
 															).toString()}
 															awayTeamName={fixture.teams.away.name}
 															awayTeamLogo={fixture.teams.away.logo}
-															awayTeamGoals={(fixture.goals.away === null
-																? 0
+															awayTeamGoals={(fixture.fixture.status.short === 'NS'
+																? '-'
 																: fixture.goals.away
 															).toString()}
 														/>
@@ -374,14 +374,14 @@ function App() {
 															date={fixture.fixture.date}
 															homeTeamName={fixture.teams.home.name}
 															homeTeamLogo={fixture.teams.home.logo}
-															homeTeamGoals={(fixture.goals.home === null
-																? 0
+															homeTeamGoals={(fixture.fixture.status.short === 'NS'
+																? '-'
 																: fixture.goals.home
 															).toString()}
 															awayTeamName={fixture.teams.away.name}
 															awayTeamLogo={fixture.teams.away.logo}
-															awayTeamGoals={(fixture.goals.away === null
-																? 0
+															awayTeamGoals={(fixture.fixture.status.short === 'NS'
+																? '-'
 																: fixture.goals.away
 															).toString()}
 														/>
