@@ -8,6 +8,7 @@ import StandingsTable from './components/StandingsTable';
 import Fixture from './components/Fixture';
 import FixtureGameweekNumber from './components/FixtureGameweekNumber';
 import Competition from './components/Competition';
+import Alert from './components/Alert';
 
 interface standingsPremierLeagueProps {
 	[key: string]: any;
@@ -95,6 +96,7 @@ function App() {
 	const [competitions, setCompetitions] = useState<any>(null);
 	const [activeButton, setActiveButton] = useState<string>('arsenal');
 	const [collapsible, setCollapsible] = useState<boolean>(false);
+	const [requestError, setrequestError] = useState<string>('');
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -112,6 +114,11 @@ function App() {
 						headers,
 					},
 				);
+
+				// Handle error if API call fails
+				if (standingsPremierLeagueResponse.data.errors.requests) {
+					setrequestError(standingsPremierLeagueResponse.data.errors.requests);
+				}
 
 				// Make the second API call for the current round
 				const roundPremierLeagueResponse = await axios.get(
@@ -155,7 +162,7 @@ function App() {
 				setCompetitions(competitionsResponse.data.response);
 			} catch (error) {
 				// Handle errors if any of the API calls fail
-				// console.error('Error:', error);
+				console.error('Error:', error);
 			}
 		};
 
@@ -209,6 +216,7 @@ function App() {
 		});
 
 	const sortFixturesByDate = (fixturesArray: Array<Match>) =>
+		fixturesArray &&
 		fixturesArray.sort((a: Match, b: Match) => {
 			const dateA = new Date(a.fixture.date).valueOf();
 			const dateB = new Date(b.fixture.date).valueOf();
@@ -248,7 +256,7 @@ function App() {
 						{/* TODO enable Dinamo button when APIs will get that data */}
 						{/* <button>Dinamo</button> */}
 					</div>
-					{parsedCompetitions.competitions.length > 0 && (
+					{parsedCompetitions?.competitions && parsedCompetitions.competitions.length > 0 && (
 						<div className="competition-participation-wrapper">
 							<h2 className="heading">Competitions Arsenal is participating</h2>
 							<div className="competitions">
@@ -271,61 +279,11 @@ function App() {
 						</div>
 					)}
 				</div>
-				<div className="section-two-col">
-					<div className="content-block">
-						<div className="content-block-fixtures">
-							<h2 className="heading">Premier League</h2>
-							<div className="fixtures-wrapper">
-								<div className="previous-fixtures">
-									<FixtureGameweekNumber
-										roundResponse={JSON.parse(getPremierLeagueData)?.eplCurrentRound?.response[0]}
-									/>
-									{arsenalPreviousFixture && (
-										<Fixture
-											date={arsenalPreviousFixture.fixture.date}
-											homeTeamName={arsenalPreviousFixture.teams.home.name}
-											homeTeamLogo={arsenalPreviousFixture.teams.home.logo}
-											homeTeamGoals={(arsenalPreviousFixture.fixture.status.short === 'NS'
-												? '-'
-												: arsenalPreviousFixture.goals.home
-											).toString()}
-											awayTeamName={arsenalPreviousFixture.teams.away.name}
-											awayTeamLogo={arsenalPreviousFixture.teams.away.logo}
-											awayTeamGoals={(arsenalPreviousFixture.fixture.status.short === 'NS'
-												? '-'
-												: arsenalPreviousFixture.goals.away
-											).toString()}
-										/>
-									)}
-								</div>
-								<div className="future-fixtures">
-									<FixtureGameweekNumber
-										roundResponse={JSON.parse(getPremierLeagueData)?.eplCurrentRound?.response[0]}
-										nextRoundResponse
-									/>
-									{arsenalFutureFixture && (
-										<Fixture
-											date={arsenalFutureFixture.fixture.date}
-											homeTeamName={arsenalFutureFixture.teams.home.name}
-											homeTeamLogo={arsenalFutureFixture.teams.home.logo}
-											homeTeamGoals={(arsenalFutureFixture.fixture.status.short === 'NS'
-												? '-'
-												: arsenalFutureFixture.goals.home
-											).toString()}
-											awayTeamName={arsenalFutureFixture.teams.away.name}
-											awayTeamLogo={arsenalFutureFixture.teams.away.logo}
-											awayTeamGoals={(arsenalFutureFixture.fixture.status.short === 'NS'
-												? '-'
-												: arsenalFutureFixture.goals.away
-											).toString()}
-										/>
-									)}
-								</div>
-							</div>
-							<button className="button" onClick={() => setCollapsible((prev) => !prev)}>
-								<span>{collapsible ? 'Hide' : 'Show'}</span> the rest of the games
-							</button>
-							{collapsible && (
+				{getPremierLeagueData !== null && (
+					<div className="section-two-col">
+						<div className="content-block">
+							<div className="content-block-fixtures">
+								<h2 className="heading">Premier League</h2>
 								<div className="fixtures-wrapper">
 									<div className="previous-fixtures">
 										<FixtureGameweekNumber
@@ -333,30 +291,23 @@ function App() {
 												JSON.parse(getPremierLeagueData)?.eplCurrentRound?.response[0]
 											}
 										/>
-										<div className="fixtures-collapsable-wrapper">
-											<div className="fixtures-list">
-												{nonArsenalPreviousFixtures?.map((fixture: any, index: number) => {
-													return (
-														<Fixture
-															key={index}
-															date={fixture.fixture.date}
-															homeTeamName={fixture.teams.home.name}
-															homeTeamLogo={fixture.teams.home.logo}
-															homeTeamGoals={(fixture.fixture.status.short === 'NS'
-																? '-'
-																: fixture.goals.home
-															).toString()}
-															awayTeamName={fixture.teams.away.name}
-															awayTeamLogo={fixture.teams.away.logo}
-															awayTeamGoals={(fixture.fixture.status.short === 'NS'
-																? '-'
-																: fixture.goals.away
-															).toString()}
-														/>
-													);
-												})}
-											</div>
-										</div>
+										{arsenalPreviousFixture && (
+											<Fixture
+												date={arsenalPreviousFixture.fixture.date}
+												homeTeamName={arsenalPreviousFixture.teams.home.name}
+												homeTeamLogo={arsenalPreviousFixture.teams.home.logo}
+												homeTeamGoals={(arsenalPreviousFixture.fixture.status.short === 'NS'
+													? '-'
+													: arsenalPreviousFixture.goals.home
+												).toString()}
+												awayTeamName={arsenalPreviousFixture.teams.away.name}
+												awayTeamLogo={arsenalPreviousFixture.teams.away.logo}
+												awayTeamGoals={(arsenalPreviousFixture.fixture.status.short === 'NS'
+													? '-'
+													: arsenalPreviousFixture.goals.away
+												).toString()}
+											/>
+										)}
 									</div>
 									<div className="future-fixtures">
 										<FixtureGameweekNumber
@@ -365,42 +316,108 @@ function App() {
 											}
 											nextRoundResponse
 										/>
-										<div className="fixtures-collapsable-wrapper">
-											<div className="fixtures-list">
-												{nonArsenalFutureFixtures?.map((fixture: any, index: number) => {
-													return (
-														<Fixture
-															key={index}
-															date={fixture.fixture.date}
-															homeTeamName={fixture.teams.home.name}
-															homeTeamLogo={fixture.teams.home.logo}
-															homeTeamGoals={(fixture.fixture.status.short === 'NS'
-																? '-'
-																: fixture.goals.home
-															).toString()}
-															awayTeamName={fixture.teams.away.name}
-															awayTeamLogo={fixture.teams.away.logo}
-															awayTeamGoals={(fixture.fixture.status.short === 'NS'
-																? '-'
-																: fixture.goals.away
-															).toString()}
-														/>
-													);
-												})}
+										{arsenalFutureFixture && (
+											<Fixture
+												date={arsenalFutureFixture.fixture.date}
+												homeTeamName={arsenalFutureFixture.teams.home.name}
+												homeTeamLogo={arsenalFutureFixture.teams.home.logo}
+												homeTeamGoals={(arsenalFutureFixture.fixture.status.short === 'NS'
+													? '-'
+													: arsenalFutureFixture.goals.home
+												).toString()}
+												awayTeamName={arsenalFutureFixture.teams.away.name}
+												awayTeamLogo={arsenalFutureFixture.teams.away.logo}
+												awayTeamGoals={(arsenalFutureFixture.fixture.status.short === 'NS'
+													? '-'
+													: arsenalFutureFixture.goals.away
+												).toString()}
+											/>
+										)}
+									</div>
+								</div>
+								<button className="button" onClick={() => setCollapsible((prev) => !prev)}>
+									<span>{collapsible ? 'Hide' : 'Show'}</span> the rest of the games
+								</button>
+								{collapsible && (
+									<div className="fixtures-wrapper">
+										<div className="previous-fixtures">
+											<FixtureGameweekNumber
+												roundResponse={
+													JSON.parse(getPremierLeagueData)?.eplCurrentRound?.response[0]
+												}
+											/>
+											<div className="fixtures-collapsable-wrapper">
+												<div className="fixtures-list">
+													{nonArsenalPreviousFixtures?.map((fixture: any, index: number) => {
+														return (
+															<Fixture
+																key={index}
+																date={fixture.fixture.date}
+																homeTeamName={fixture.teams.home.name}
+																homeTeamLogo={fixture.teams.home.logo}
+																homeTeamGoals={(fixture.fixture.status.short === 'NS'
+																	? '-'
+																	: fixture.goals.home
+																).toString()}
+																awayTeamName={fixture.teams.away.name}
+																awayTeamLogo={fixture.teams.away.logo}
+																awayTeamGoals={(fixture.fixture.status.short === 'NS'
+																	? '-'
+																	: fixture.goals.away
+																).toString()}
+															/>
+														);
+													})}
+												</div>
+											</div>
+										</div>
+										<div className="future-fixtures">
+											<FixtureGameweekNumber
+												roundResponse={
+													JSON.parse(getPremierLeagueData)?.eplCurrentRound?.response[0]
+												}
+												nextRoundResponse
+											/>
+											<div className="fixtures-collapsable-wrapper">
+												<div className="fixtures-list">
+													{nonArsenalFutureFixtures?.map((fixture: any, index: number) => {
+														return (
+															<Fixture
+																key={index}
+																date={fixture.fixture.date}
+																homeTeamName={fixture.teams.home.name}
+																homeTeamLogo={fixture.teams.home.logo}
+																homeTeamGoals={(fixture.fixture.status.short === 'NS'
+																	? '-'
+																	: fixture.goals.home
+																).toString()}
+																awayTeamName={fixture.teams.away.name}
+																awayTeamLogo={fixture.teams.away.logo}
+																awayTeamGoals={(fixture.fixture.status.short === 'NS'
+																	? '-'
+																	: fixture.goals.away
+																).toString()}
+															/>
+														);
+													})}
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							)}
+								)}
+							</div>
 						</div>
 					</div>
+				)}
+			</div>
+			{getPremierLeagueData && (
+				<div className="content-block content-block-standings-table">
+					<StandingsTable
+						data={JSON.parse(getPremierLeagueData)?.eplStandings?.response[0]?.league.standings[0]}
+					/>
 				</div>
-			</div>
-			<div className="content-block content-block-standings-table">
-				<StandingsTable
-					data={JSON.parse(getPremierLeagueData)?.eplStandings?.response[0]?.league.standings[0]}
-				/>
-			</div>
+			)}
+			{!getPremierLeagueData && <Alert title={requestError} />}
 		</div>
 	);
 }
