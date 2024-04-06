@@ -1,0 +1,11 @@
+.alert-wrapper {
+	padding: 1rem;
+	border-radius: 0.5rem;
+	border: 1px solid transparent;
+
+	&.alert-wrapper-error {
+		background-color: $alert-warning-bc;
+		color: $alert-warning-c;
+		border-color: $alert-warning-b;
+	}
+}
