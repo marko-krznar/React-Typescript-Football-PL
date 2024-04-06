@@ -10,6 +10,14 @@
 		box-sizing: border-box;
 	}
 
+	.container-error {
+		flex-direction: column;
+
+		.section-grid {
+			width: 100%;
+		}
+	}
+
 	.content-block {
 		background: $light-background;
 		border-radius: 1rem;

@@ -235,7 +235,7 @@ function App() {
 	);
 
 	return (
-		<div className="container">
+		<div className={getPremierLeagueData ? 'container' : 'container container-error'}>
 			<div className="section-grid">
 				<div className="content-block-intro">
 					<h1 className="heading">Football Results</h1>
