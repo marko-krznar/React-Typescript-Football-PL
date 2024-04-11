@@ -1,13 +1,13 @@
 export interface FixtureGameweekNumberProps {
-	roundResponse: string;
-	nextRoundResponse?: boolean;
+	currentRoundResponse: string;
+	playedRoundResponse?: boolean;
 }
 
-function FixtureGameweekNumber({ roundResponse, nextRoundResponse }: FixtureGameweekNumberProps) {
-	const currentRoundSplit = roundResponse?.split(' ');
+function FixtureGameweekNumber({ currentRoundResponse, playedRoundResponse }: FixtureGameweekNumberProps) {
+	const currentRoundSplit = currentRoundResponse?.split(' ');
 
-	if (nextRoundResponse) {
-		return <span className="fixture-gameweek">Gameweek {Number(currentRoundSplit?.slice(-1)) + 1}</span>;
+	if (playedRoundResponse) {
+		return <span className="fixture-gameweek">Gameweek {Number(currentRoundSplit?.slice(-1)) - 1}</span>;
 	}
 
 	return <span className="fixture-gameweek">Gameweek {currentRoundSplit?.slice(-1)}</span>;

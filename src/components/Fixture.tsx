@@ -4,8 +4,8 @@ export interface FixtureProps {
 	date: string;
 	homeTeamName: string;
 	awayTeamName: string;
-	homeTeamGoals?: string;
-	awayTeamGoals?: string;
+	homeTeamGoals: string | null;
+	awayTeamGoals: string | null;
 	homeTeamLogo?: string;
 	awayTeamLogo?: string;
 }
